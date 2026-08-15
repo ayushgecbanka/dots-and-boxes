@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dots Battle</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+    color:white;
+    overflow-x:hidden;
+
+    background:
+    linear-gradient(
+        rgba(4,8,20,.60),
+        rgba(4,8,20,.82)
+    ),
+    url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=85");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+
+/* ---------- HOME ---------- */
+
+.home{
+    width:min(1100px,94%);
+    margin:auto;
+    padding:45px 0;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.logo h1{
+    font-size:48px;
+    letter-spacing:4px;
+
+    background:linear-gradient(
+        90deg,
+        #28dfff,
+        white,
+        #ff3f91
+    );
+
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.logo p{
+    color:#9ca9c5;
+    margin-top:8px;
+}
+
+.setup{
+    display:grid;
+    grid-template-columns:1fr 1.2fr 1fr;
+    gap:18px;
+}
+
+.card{
+    background:rgba(10,17,35,.75);
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:22px;
+    padding:25px;
+    backdrop-filter:blur(15px);
+    box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+
+.card h3{
+    font-size:13px;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+
+.player-blue h3{
+    color:#27dfff;
+}
+
+.player-pink h3{
+    color:#ff3f91;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #34415d;
+    outline:none;
+    background:#070d1c;
+    color:white;
+    font-size:15px;
+}
+
+input:focus{
+    border-color:#8b5cf6;
+}
+
+.sizes{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.size{
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #35415b;
+    background:#080e1d;
+    color:white;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.size:hover{
+    transform:translateY(-2px);
+}
+
+.size.active{
+    border-color:#27dfff;
+    background:rgba(39,223,255,.1);
+    box-shadow:0 0 20px rgba(39,223,255,.15);
+}
+
+.size small{
+    display:block;
+    color:#8390aa;
+    margin-top:4px;
+}
+
+.online{
+    margin-top:18px;
+}
+
+.online h2{
+    margin-bottom:7px;
+}
+
+.online p{
+    color:#929db5;
+    font-size:14px;
+}
+
+.online-buttons{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+button{
+    font-family:inherit;
+}
+
+.primary{
+    border:0;
+    padding:14px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
+
+    background:
+    linear-gradient(
+        100deg,
+        #168fff,
+        #784dff,
+        #e83d9c
+    );
+
+    box-shadow:0 10px 30px rgba(88,80,255,.3);
+}
+
+.secondary{
+    border:1px solid #34415d;
+    background:#0a1020;
+    color:white;
+    padding:14px 22px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.room{
+    display:flex;
+    gap:8px;
+    flex:1;
+}
+
+.room input{
+    text-transform:uppercase;
+}
+
+.message{
+    color:#ff789f;
+    font-size:13px;
+    margin-top:10px;
+    min-height:18px;
+}
+
+.demo{
+    display:block;
+    margin:20px auto 0;
+    background:none;
+    border:0;
+    color:#8c98b0;
+    cursor:pointer;
+    text-decoration:underline;
+}
+
+/* ---------- GAME ---------- */
+
+.game{
+    width:min(1100px,95%);
+    margin:auto;
+    padding:25px 0 40px;
+}
+
+.game-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.game-top h2{
+    font-size:25px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+.action{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    border:1px solid #34415d;
+    background:rgba(7,13,28,.8);
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.score-area{
+    display:grid;
+    grid-template-columns:1fr 150px 1fr;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.score{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:rgba(7,13,28,.82);
+    border:1px solid #26334d;
+    border-radius:17px;
+    padding:13px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.blue .avatar{
+    background:rgba(39,223,255,.13);
+    color:#27dfff;
+}
+
+.pink .avatar{
+    background:rgba(255,63,145,.13);
+    color:#ff3f91;
+}
+
+.score-info strong{
+    display:block;
+}
+
+.score-info small{
+    color:#7d8aa5;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+.number{
+    margin-left:auto;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.blue .number{
+    color:#27dfff;
+}
+
+.pink .number{
+    color:#ff3f91;
+}
+
+.turn{
+    display:grid;
+    place-items:center;
+    background:rgba(7,13,28,.82);
+    border:1px solid #26334d;
+    border-radius:17px;
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.board-card{
+    background:rgba(7,13,28,.78);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:22px;
+    padding:20px;
+    backdrop-filter:blur(15px);
+}
+
+.board-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.board-title h3{
+    margin-top:5px;
+}
+
+.rule{
+    color:#7e8aa3;
+    font-size:10px;
+    border:1px solid #293650;
+    border-radius:20px;
+    padding:8px 12px;
+}
+
+.board{
+    position:relative;
+    width:min(720px,92vw);
+    aspect-ratio:1;
+    margin:auto;
+    border-radius:18px;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(45,76,130,.18),
+        rgba(2,7,18,.5)
+    );
+}
+
+/* lines */
+
+.line{
+    position:absolute;
+    z-index:2;
+    border:0;
+    padding:0;
+    border-radius:20px;
+    background:#34425f;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.line:hover{
+    background:#74829d;
+    box-shadow:0 0 12px rgba(255,255,255,.25);
+}
+
+.horizontal{
+    height:10px;
+    transform:translate(-50%,-50%);
+}
+
+.vertical{
+    width:10px;
+    transform:translate(-50%,-50%);
+}
+
+.line.blue-line{
+    background:#27dfff;
+    box-shadow:0 0 18px rgba(39,223,255,.8);
+}
+
+.line.pink-line{
+    background:#ff3f91;
+    box-shadow:0 0 18px rgba(255,63,145,.8);
+}
+
+/* dots */
+
+.dot-point{
+    position:absolute;
+    width:16px;
+    height:16px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:white;
+    z-index:5;
+    box-shadow:
+        0 0 0 5px rgba(255,255,255,.07),
+        0 0 18px white;
+}
+
+/* boxes */
+
+.box{
+    position:absolute;
+    display:grid;
+    place-items:center;
+    z-index:1;
+    border-radius:10px;
+    font-size:32px;
+    font-weight:bold;
+}
+
+.blue-box{
+    color:#27dfff;
+    background:rgba(39,223,255,.08);
+    border:1px solid rgba(39,223,255,.2);
+}
+
+.pink-box{
+    color:#ff3f91;
+    background:rgba(255,63,145,.08);
+    border:1px solid rgba(255,63,145,.2);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.waiting{
+    text-align:center;
+    padding:30px;
+    margin-bottom:15px;
+}
+
+.code{
+    font-size:38px;
+    color:#27dfff;
+    letter-spacing:7px;
+    font-weight:bold;
+    margin:12px 0;
+}
+
+/* result */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(12px);
+    display:grid;
+    place-items:center;
+    z-index:20;
+}
+
+.result{
+    width:min(420px,90%);
+    text-align:center;
+}
+
+.result h2{
+    margin:12px 0 20px;
+    font-size:30px;
+}
+
+.final{
+    display:grid;
+    gap:8px;
+    margin-bottom:20px;
+}
+
+.final div{
+    display:flex;
+    justify-content:space-between;
+    background:#080f20;
+    border-radius:12px;
+    padding:13px;
+}
+
+/* mobile */
+
+@media(max-width:800px){
+
+    .setup{
+        grid-template-columns:1fr;
+    }
+
+    .score-area{
+        grid-template-columns:1fr 80px 1fr;
+    }
+
+    .online-buttons{
+        flex-direction:column;
+    }
+
+    .room{
+        width:100%;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo h1{
+        font-size:31px;
+    }
+
+    .game{
+        padding-top:15px;
+    }
+
+    .score{
+        padding:9px;
+    }
+
+    .avatar{
+        width:34px;
+        height:34px;
+    }
+
+    .number{
+        font-size:22px;
+    }
+
+    .score-info strong{
+        font-size:12px;
+    }
+
+    .board-card{
+        padding:10px;
+    }
+
+    .rule{
+        display:none;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- ================= HOME ================= -->
+
+<div id="home" class="home">
+
+    <div class="logo">
+        <h1>DOTS & BOXES</h1>
+        <p>Classic strategy. Modern battle.</p>
+    </div>
+
+
+    <div class="setup">
+
+        <div class="card player-blue">
+
+            <h3>🔵 PLAYER 1</h3>
+
+            <input
+                id="player1"
+                maxlength="15"
+                placeholder="Enter your name"
+            >
+
+        </div>
+
+
+        <div class="card">
+
+            <h3 style="text-align:center">
+                SELECT BOARD
+            </h3>
+
+            <div class="sizes">
+
+                <button class="size" data-size="3">
+                    3 × 3
+                    <small>4 boxes</small>
+                </button>
+
+                <button class="size active" data-size="4">
+                    4 × 4
+                    <small>9 boxes</small>
+                </button>
+
+                <button class="size" data-size="5">
+                    5 × 5
+                    <small>16 boxes</small>
+                </button>
+
+                <button class="size" data-size="6">
+                    6 × 6
+                    <small>25 boxes</small>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card player-pink">
+
+            <h3 style="text-align:right">
+                PLAYER 2 🩷
+            </h3>
+
+            <input
+                id="player2"
+                maxlength="15"
+                placeholder="Friend's name"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="card online">
+
+        <h2>🌐 Play Online</h2>
+
+        <p>
+            Create a private room and send the room code
+            to your friend.
+        </p>
+
+
+        <div class="online-buttons">
+
+            <button
+                class="primary"
+                id="createRoom"
+            >
+                CREATE ROOM →
+            </button>
+
+
+            <div class="room">
+
+                <input
+                    id="roomCode"
+                    maxlength="6"
+                    placeholder="ROOM CODE"
+                >
+
+                <button
+                    class="secondary"
+                    id="joinRoom"
+                >
+                    JOIN
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+    </div>
+
+
+    <button
+        class="demo"
+        id="localGame"
+    >
+        Play local demo on this device
+    </button>
+
+</div>
+
+
+
+<!-- ================= GAME ================= -->
+
+<div id="game" class="game hidden">
+
+    <div class="game-top">
+
+        <div>
+            <small style="color:#7d8aa5">
+                DOTS BATTLE
+            </small>
+
+            <h2 id="roomName">
+                Room
+            </h2>
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="action"
+                id="copy"
+            >
+                ⧉
+            </button>
+
+            <button
+                class="action"
+                id="sound"
+            >
+                🔊
+            </button>
+
+            <button
+                class="action"
+                id="leave"
+            >
+                ×
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="score-area">
+
+        <div
+            id="card0"
+            class="score blue"
+        >
+
+            <div
+                id="avatar0"
+                class="avatar"
+            >
+                A
+            </div>
+
+            <div class="score-info">
+
+                <strong id="name0">
+                    Player 1
+                </strong>
+
+                <small>
+                    BLUE
+                </small>
+
+            </div>
+
+            <div
+                id="score0"
+                class="number"
+            >
+                0
+            </div>
+
+        </div>
+
+
+
+        <div
+            id="turn"
+            class="turn"
+        >
+            WAITING
+        </div>
+
+
+
+        <div
+            id="card1"
+            class="score pink"
+        >
+
+            <div
+                id="avatar1"
+                class="avatar"
+            >
+                P
+            </div>
+
+            <div class="score-info">
+
+                <strong id="name1">
+                    Player 2
+                </strong>
+
+                <small>
+                    PINK
+                </small>
+
+            </div>
+
+            <div
+                id="score1"
+                class="number"
+            >
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div
+        id="waiting"
+        class="card waiting hidden"
+    >
+
+        <h2>Waiting for friend...</h2>
+
+        <p style="color:#8996b0">
+            Send this code to your friend
+        </p>
+
+        <div
+            id="bigCode"
+            class="code"
+        >
+            ------ 
+        </div>
+
+        <button
+            class="primary"
+            onclick="copyRoom()"
+        >
+            COPY ROOM CODE
+        </button>
+
+    </div>
+
+
+
+    <div
+        id="boardCard"
+        class="board-card"
+    >
+
+        <div class="board-title">
+
+            <div>
+
+                <small style="color:#7d8aa5">
+                    MATCH
+                </small>
+
+                <h3 id="status">
+                    Your move
+                </h3>
+
+            </div>
+
+            <div class="rule">
+                BOX = +1 · EXTRA TURN
+            </div>
+
+        </div>
+
+
+        <div
+            id="board"
+            class="board"
+        ></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= RESULT ================= -->
+
+<div
+    id="modal"
+    class="modal hidden"
+>
+
+    <div class="card result">
+
+        <div style="font-size:55px">
+            🏆
+        </div>
+
+        <small style="color:#8794ae">
+            MATCH COMPLETE
+        </small>
+
+        <h2 id="winner">
+            Winner
+        </h2>
+
+
+        <div class="final">
+
+            <div>
+                <span id="finalName0">
+                    Player 1
+                </span>
+
+                <b id="finalScore0">
+                    0
+                </b>
+            </div>
+
+            <div>
+                <span id="finalName1">
+                    Player 2
+                </span>
+
+                <b id="finalScore1">
+                    0
+                </b>
+            </div>
+
+        </div>
+
+
+        <button
+            class="primary"
+            onclick="location.reload()"
+        >
+            BACK TO HOME
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+let boardSize = 4;
+
+let localGame = false;
+
+let roomCode = "";
+
+let soundOn = true;
+
+let state;
+
+
+/* ================= SIZE ================= */
+
+document.querySelectorAll(".size").forEach(button => {
+
+    button.onclick = () => {
+
+        document.querySelectorAll(".size")
+        .forEach(x => x.classList.remove("active"));
+
+        button.classList.add("active");
+
+        boardSize =
+            Number(button.dataset.size);
+
+    };
+
+});
+
+
+
+/* ================= LOCAL GAME ================= */
+
+document.getElementById("localGame").onclick = () => {
+
+    localGame = true;
+
+    const p1 =
+        document.getElementById("player1")
+        .value.trim() || "Player 1";
+
+    const p2 =
+        document.getElementById("player2")
+        .value.trim() || "Player 2";
+
+
+    roomCode = "LOCAL";
+
+
+    state = {
+
+        size:boardSize,
+
+        turn:0,
+
+        status:"playing",
+
+        players:[
+            p1,
+            p2
+        ],
+
+        scores:[
+            0,
+            0
+        ],
+
+        lines:{},
+
+        boxes:{}
+
+    };
+
+
+    startGame();
+
+};
+
+
+
+/* ================= START GAME ================= */
+
+function startGame(){
+
+    document.getElementById("home")
+    .classList.add("hidden");
+
+    document.getElementById("game")
+    .classList.remove("hidden");
+
+    document.getElementById("roomName")
+    .innerText =
+        "Room " + roomCode;
+
+    updateGame();
+
+}
+
+
+
+/* ================= DRAW BOARD ================= */
+
+function drawBoard(){
+
+    const board =
+        document.getElementById("board");
+
+    board.innerHTML = "";
+
+    const n = state.size;
+
+    const step =
+        100 / (n - 1);
+
+
+
+    /* ---------- HORIZONTAL ---------- */
+
+    for(let r=0;r<n;r++){
+
+        for(let c=0;c<n-1;c++){
+
+            const key =
+                `h_${r}_${c}`;
+
+            const line =
+                document.createElement("button");
+
+            line.className =
+                "line horizontal";
+
+            line.style.left =
+                `${(c+.5)*step}%`;
+
+            line.style.top =
+                `${r*step}%`;
+
+            line.style.width =
+                `${step}%`;
+
+
+            if(state.lines[key] !== undefined){
+
+                line.classList.add(
+                    state.lines[key] === 0
+                    ? "blue-line"
+                    : "pink-line"
+                );
+
+            }
+
+
+            line.onclick = () => {
+
+                makeMove(
+                    "h",
+                    r,
+                    c
+                );
+
+            };
+
+
+            board.appendChild(line);
+
+        }
+
+    }
+
+
+
+    /* ---------- VERTICAL ---------- */
+
+    for(let r=0;r<n-1;r++){
+
+        for(let c=0;c<n;c++){
+
+            const key =
+                `v_${r}_${c}`;
+
+            const line =
+                document.createElement("button");
+
+            line.className =
+                "line vertical";
+
+            line.style.left =
+                `${c*step}%`;
+
+            line.style.top =
+                `${(r+.5)*step}%`;
+
+            line.style.height =
+                `${step}%`;
+
+
+            if(state.lines[key] !== undefined){
+
+                line.classList.add(
+                    state.lines[key] === 0
+                    ? "blue-line"
+                    : "pink-line"
+                );
+
+            }
+
+
+            line.onclick = () => {
+
+                makeMove(
+                    "v",
+                    r,
+                    c
+                );
+
+            };
+
+
+            board.appendChild(line);
+
+        }
+
+    }
+
+
+
+    /* ---------- BOXES ---------- */
+
+    for(let r=0;r<n-1;r++){
+
+        for(let c=0;c<n-1;c++){
+
+            const key =
+                `${r}_${c}`;
+
+            if(state.boxes[key] === undefined)
+                continue;
+
+
+            const box =
+                document.createElement("div");
+
+            box.className =
+                "box " +
+                (
+                    state.boxes[key] === 0
+                    ? "blue-box"
+                    : "pink-box"
+                );
+
+
+            box.style.left =
+                `${c*step + 2}%`;
+
+            box.style.top =
+                `${r*step + 2}%`;
+
+            box.style.width =
+                `${step - 4}%`;
+
+            box.style.height =
+                `${step - 4}%`;
+
+
+            const player =
+                state.players[
+                    state.boxes[key]
+                ];
+
+
+            box.innerText =
+                player.charAt(0)
+                .toUpperCase();
+
+
+            board.appendChild(box);
+
+        }
+
+    }
+
+
+
+    /* ---------- DOTS ---------- */
+
+    for(let r=0;r<n;r++){
+
+        for(let c=0;c<n;c++){
+
+            const dot =
+                document.createElement("div");
+
+            dot.className =
+                "dot-point";
+
+            dot.style.left =
+                `${c*step}%`;
+
+            dot.style.top =
+                `${r*step}%`;
+
+
+            board.appendChild(dot);
+
+        }
+
+    }
+
+}
+
+
+
+/* ================= BOX CHECK ================= */
+
+function hasLine(type,r,c){
+
+    return state.lines[
+        `${type}_${r}_${c}`
+    ] !== undefined;
+
+}
+
+
+function completeBox(r,c){
+
+    return (
+
+        hasLine("h",r,c) &&
+
+        hasLine("h",r+1,c) &&
+
+        hasLine("v",r,c) &&
+
+        hasLine("v",r,c+1)
+
+    );
+
+}
+
+
+
+/* ================= MOVE ================= */
+
+function makeMove(type,r,c){
+
+    if(state.status !== "playing")
+        return;
+
+
+    const key =
+        `${type}_${r}_${c}`;
+
+
+    if(state.lines[key] !== undefined)
+        return;
+
+
+    state.lines[key] =
+        state.turn;
+
+
+    let boxesMade = 0;
+
+
+    for(let br=0;br<state.size-1;br++){
+
+        for(let bc=0;bc<state.size-1;bc++){
+
+            const boxKey =
+                `${br}_${bc}`;
+
+
+            if(
+                state.boxes[boxKey] === undefined
+                &&
+                completeBox(br,bc)
+            ){
+
+                state.boxes[boxKey] =
+                    state.turn;
+
+                state.scores[state.turn]++;
+
+                boxesMade++;
+
+            }
+
+        }
+
+    }
+
+
+
+    /*
+
+       IMPORTANT:
+
+       Box banaya =
+       same player ka extra turn
+
+       Box nahi banaya =
+       turn change
+
+    */
+
+    if(boxesMade === 0){
+
+        state.turn =
+            state.turn === 0
+            ? 1
+            : 0;
+
+    }
+
+
+    const totalLines =
+        state.size *
+        (state.size - 1) *
+        2;
+
+
+    if(
+        Object.keys(state.lines).length
+        === totalLines
+    ){
+
+        state.status =
+            "finished";
+
+    }
+
+
+    updateGame();
+
+}
+
+
+
+/* ================= UPDATE UI ================= */
+
+function updateGame(){
+
+    document.getElementById("name0")
+        .innerText =
+        state.players[0];
+
+    document.getElementById("name1")
+        .innerText =
+        state.players[1];
+
+
+    document.getElementById("avatar0")
+        .innerText =
+        state.players[0]
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById("avatar1")
+        .innerText =
+        state.players[1]
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById("score0")
+        .innerText =
+        state.scores[0];
+
+    document.getElementById("score1")
+        .innerText =
+        state.scores[1];
+
+
+    document.getElementById("turn")
+        .innerText =
+        state.players[state.turn]
+        + "'S TURN";
+
+
+    document.getElementById("status")
+        .innerText =
+        state.players[state.turn]
+        + " — Your move";
+
+
+    document.getElementById("card0")
+        .style.borderColor =
+        state.turn === 0
+        ? "#27dfff"
+        : "#26334d";
+
+
+    document.getElementById("card1")
+        .style.borderColor =
+        state.turn === 1
+        ? "#ff3f91"
+        : "#26334d";
+
+
+    drawBoard();
+
+
+    if(state.status === "finished"){
+
+        showResult();
+
+    }
+
+}
+
+
+
+/* ================= RESULT ================= */
+
+function showResult(){
+
+    document.getElementById("finalName0")
+        .innerText =
+        state.players[0];
+
+    document.getElementById("finalName1")
+        .innerText =
+        state.players[1];
+
+
+    document.getElementById("finalScore0")
+        .innerText =
+        state.scores[0];
+
+    document.getElementById("finalScore1")
+        .innerText =
+        state.scores[1];
+
+
+    let winner;
+
+
+    if(
+        state.scores[0]
+        >
+        state.scores[1]
+    ){
+
+        winner =
+            state.players[0]
+            + " Wins!";
+
+    }
+    else if(
+        state.scores[1]
+        >
+        state.scores[0]
+    ){
+
+        winner =
+            state.players[1]
+            + " Wins!";
+
+    }
+    else{
+
+        winner =
+            "It's a Draw!";
+
+    }
+
+
+    document.getElementById("winner")
+        .innerText =
+        winner;
+
+
+    document.getElementById("modal")
+        .classList.remove("hidden");
+
+}
+
+
+
+/* ================= COPY ================= */
+
+function copyRoom(){
+
+    navigator.clipboard
+        ?.writeText(roomCode);
+
+}
+
+
+document.getElementById("copy")
+.onclick =
+copyRoom;
+
+
+
+/* ================= SOUND ================= */
+
+document.getElementById("sound")
+.onclick = () => {
+
+    soundOn = !soundOn;
+
+    document.getElementById("sound")
+        .innerText =
+        soundOn
+        ? "🔊"
+        : "🔇";
+
+};
+
+
+
+/* ================= LEAVE ================= */
+
+document.getElementById("leave")
+.onclick = () => {
+
+    location.reload();
+
+};
+
+
+
+/* ================= ONLINE PLACEHOLDER ================= */
+
+document.getElementById("createRoom")
+.onclick = () => {
+
+    document.getElementById("message")
+        .innerText =
+        "Online mode ke liye Firebase connect karna hai. Local Demo abhi working hai.";
+
+};
+
+
+document.getElementById("joinRoom")
+.onclick = () => {
+
+    document.getElementById("message")
+        .innerText =
+        "Online mode ke liye Firebase connect karna hai.";
+
+};
+
+</script>
+
+</body>
+</html>
