@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dots Battle - Online</title>
 
 <style>
@@ -13,100 +13,89 @@
 }
 
 body{
-    min-height:100vh;
     font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
     color:white;
     background:
-        radial-gradient(circle at 20% 20%,#283c86 0%,transparent 35%),
-        radial-gradient(circle at 80% 30%,#512da8 0%,transparent 35%),
-        linear-gradient(135deg,#080b18,#11182d 50%,#170d25);
+        radial-gradient(circle at 20% 20%, #263c68 0%, transparent 35%),
+        radial-gradient(circle at 80% 10%, #692c5b 0%, transparent 35%),
+        linear-gradient(135deg,#090d1d,#151a32,#241328);
 }
 
 .container{
-    width:min(1200px,94%);
+    width:95%;
+    max-width:1100px;
     margin:auto;
-    padding:30px 0 60px;
+    padding:25px 0 50px;
 }
 
 header{
     text-align:center;
-    margin-bottom:30px;
+    margin-bottom:25px;
 }
 
 header h1{
     font-size:42px;
-    letter-spacing:3px;
-    background:linear-gradient(90deg,#00e5ff,#7c4dff,#ff4081);
+    letter-spacing:2px;
+    background:linear-gradient(90deg,#00d9ff,#ff4db8);
     -webkit-background-clip:text;
     color:transparent;
 }
 
 header p{
-    color:#aeb8d0;
-    margin-top:8px;
+    color:#aeb6d0;
+    margin-top:7px;
+}
+
+.card{
+    background:rgba(13,19,40,.92);
+    border:1px solid #293451;
+    border-radius:22px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 15px 45px rgba(0,0,0,.3);
 }
 
 .setup{
     display:grid;
-    grid-template-columns:1fr 1.2fr 1fr;
+    grid-template-columns:1fr 1fr 1fr;
     gap:20px;
-    margin-bottom:25px;
 }
 
-.card{
-    background:rgba(15,22,43,.88);
-    border:1px solid #293555;
-    border-radius:22px;
-    padding:25px;
-    box-shadow:0 15px 40px rgba(0,0,0,.3);
-}
-
-.card h2{
-    text-align:center;
-    margin-bottom:20px;
-    font-size:20px;
-}
-
-.player-title{
-    font-size:20px;
-    font-weight:bold;
+.player h2{
     margin-bottom:15px;
+    font-size:20px;
 }
 
-.blue{
-    color:#36d9ff;
-}
-
-.pink{
-    color:#ff5ba7;
-}
+.p1 h2{color:#22d9ff;}
+.p2 h2{color:#ff5cb8;}
 
 input{
     width:100%;
     padding:15px;
     border-radius:12px;
-    border:1px solid #33405f;
-    background:#070d1d;
+    border:1px solid #34405e;
+    background:#080d1e;
     color:white;
-    outline:none;
     font-size:16px;
+    outline:none;
 }
 
 input:focus{
-    border-color:#22d3ee;
+    border-color:#00d9ff;
 }
 
 .boards{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:12px;
+    gap:10px;
 }
 
 .board-btn{
-    background:#080f20;
-    border:1px solid #34415e;
-    color:white;
     padding:18px 10px;
+    background:#080d1e;
+    border:1px solid #34405e;
+    color:white;
     border-radius:14px;
     cursor:pointer;
     font-size:17px;
@@ -114,30 +103,28 @@ input:focus{
 }
 
 .board-btn:hover{
-    border-color:#27d9ff;
+    border-color:#00d9ff;
     transform:translateY(-2px);
 }
 
-.board-btn.selected{
-    border:2px solid #22d3ee;
-    background:#15364b;
+.board-btn.active{
+    background:#163c51;
+    border:2px solid #00d9ff;
 }
 
-.online{
-    background:rgba(10,17,35,.94);
-    border:1px solid #293555;
-    border-radius:22px;
-    padding:25px;
-    margin-bottom:25px;
+.board-btn small{
+    display:block;
+    color:#9ca8c5;
+    margin-top:5px;
 }
 
 .online h2{
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
 
 .online p{
-    color:#aeb8d0;
-    margin-bottom:18px;
+    color:#9ca8c5;
+    margin-bottom:15px;
 }
 
 .online-row{
@@ -148,115 +135,127 @@ input:focus{
 button{
     border:none;
     cursor:pointer;
-}
-
-.primary{
-    padding:15px 25px;
-    border-radius:12px;
     color:white;
     font-weight:bold;
-    font-size:15px;
-    background:linear-gradient(90deg,#168cff,#d62cff);
 }
 
-.secondary{
-    padding:15px 25px;
+.create{
+    min-width:190px;
     border-radius:12px;
-    color:white;
-    font-weight:bold;
-    background:#202b48;
+    background:linear-gradient(90deg,#148cff,#d72db4);
+    font-size:16px;
+}
+
+.join{
+    width:100px;
+    border-radius:12px;
+    background:#293654;
+    font-size:16px;
 }
 
 .status{
-    margin-top:15px;
-    color:#ff5ba7;
+    margin-top:14px;
+    color:#ff5eb8;
     min-height:20px;
 }
 
 .game{
     display:none;
-    background:rgba(8,14,30,.95);
-    border:1px solid #293555;
-    border-radius:24px;
-    padding:25px;
 }
 
 .room{
     text-align:center;
-    color:#26dcff;
-    font-size:28px;
-    font-weight:bold;
-    margin-bottom:12px;
+    margin-bottom:20px;
+}
+
+.room h2{
+    color:#00d9ff;
+    letter-spacing:1px;
 }
 
 .turn{
     text-align:center;
-    font-size:20px;
+    padding:15px;
+    border-radius:15px;
+    background:#080d1e;
     margin-bottom:20px;
+    font-size:20px;
 }
 
 .players{
     display:flex;
     justify-content:center;
-    gap:35px;
+    gap:40px;
     margin-bottom:25px;
 }
 
 .score{
-    font-size:20px;
-    padding:10px 18px;
-    border-radius:12px;
-    background:#111a32;
+    font-size:19px;
+}
+
+.blue{
+    color:#36d9ff;
+}
+
+.pink{
+    color:#ff5eb8;
 }
 
 .board-wrap{
     display:flex;
     justify-content:center;
     overflow:auto;
-    padding:20px 0;
+    padding:20px 5px;
 }
 
-.game-board{
-    display:grid;
+.board{
     position:relative;
+    display:grid;
+    user-select:none;
+    touch-action:none;
 }
 
 .dot{
+    position:absolute;
     width:18px;
     height:18px;
     border-radius:50%;
     background:white;
-    position:absolute;
-    z-index:5;
     transform:translate(-50%,-50%);
-    box-shadow:0 0 10px rgba(255,255,255,.6);
+    z-index:5;
+    box-shadow:0 0 12px rgba(255,255,255,.5);
 }
 
 .line{
     position:absolute;
-    background:#39435e;
+    background:#34405e;
     cursor:pointer;
     z-index:2;
-    border-radius:10px;
     transition:.15s;
 }
 
 .line:hover{
-    background:#596887;
+    background:#00d9ff;
 }
 
-.line.used{
-    cursor:not-allowed;
+.line.horizontal{
+    height:9px;
+    border-radius:10px;
 }
 
-.h-line{
-    height:10px;
-    transform:translateY(-50%);
+.line.vertical{
+    width:9px;
+    border-radius:10px;
 }
 
-.v-line{
-    width:10px;
-    transform:translateX(-50%);
+.line.p1{
+    background:#20d9ff;
+    box-shadow:0 0 12px rgba(32,217,255,.5);
+}
+
+.line.p2{
+    background:#ff4db8;
+    box-shadow:0 0 12px rgba(255,77,184,.5);
 }
 
 .box{
@@ -264,58 +263,55 @@ button{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:22px;
+    font-size:20px;
     font-weight:bold;
+    border-radius:8px;
     z-index:1;
-    border-radius:8px;
 }
 
-.blue-box{
-    background:rgba(0,180,255,.25);
-    color:#32ddff;
+.box.p1{
+    background:rgba(32,217,255,.14);
+    color:#20d9ff;
 }
 
-.pink-box{
-    background:rgba(255,60,140,.25);
-    color:#ff5ba7;
+.box.p2{
+    background:rgba(255,77,184,.14);
+    color:#ff4db8;
 }
 
-.waiting{
-    text-align:center;
-    color:#9ca9c5;
+.copy{
     margin-top:15px;
+    padding:11px 20px;
+    background:#263653;
+    border-radius:10px;
 }
 
-.copy-btn{
-    margin-left:8px;
-    padding:8px 14px;
-    border-radius:8px;
-    background:#273452;
-    color:white;
-}
-
-.restart{
+.newgame{
     display:block;
     margin:20px auto 0;
+    padding:14px 25px;
+    background:linear-gradient(90deg,#148cff,#d72db4);
+    border-radius:12px;
 }
 
-@media(max-width:850px){
+.winner{
+    text-align:center;
+    font-size:25px;
+    margin-top:20px;
+    color:#ffd35c;
+}
+
+@media(max-width:800px){
     .setup{
         grid-template-columns:1fr;
     }
 
-    .online-row{
-        flex-direction:column;
-    }
-
     .players{
-        gap:10px;
-        flex-direction:column;
-        align-items:center;
+        gap:20px;
     }
 
     header h1{
-        font-size:30px;
+        font-size:32px;
     }
 }
 </style>
@@ -330,59 +326,68 @@ button{
     <p>Classic strategy. Modern battle.</p>
 </header>
 
-<div id="setupSection">
+<div id="setupScreen">
 
-<div class="setup">
+<div class="card setup">
 
-<div class="card">
-    <div class="player-title blue">🔵 PLAYER 1</div>
-    <input id="p1Name" placeholder="Your name">
+<div class="player p1">
+    <h2>🔵 PLAYER 1</h2>
+    <input id="player1Name" placeholder="Your name">
 </div>
 
-<div class="card">
-    <h2>SELECT BOARD</h2>
+<div>
+    <h2 style="margin-bottom:15px;text-align:center;">SELECT BOARD</h2>
 
     <div class="boards">
-        <button class="board-btn" data-size="3">
-            <b>3 × 3</b><br>
-            <small>4 boxes</small>
-        </button>
 
-        <button class="board-btn selected" data-size="4">
-            <b>4 × 4</b><br>
+        <button class="board-btn" data-size="3">
+            <b>3 × 3</b>
             <small>9 boxes</small>
         </button>
 
-        <button class="board-btn" data-size="5">
-            <b>5 × 5</b><br>
+        <button class="board-btn active" data-size="4">
+            <b>4 × 4</b>
             <small>16 boxes</small>
         </button>
 
-        <button class="board-btn" data-size="6">
-            <b>6 × 6</b><br>
+        <button class="board-btn" data-size="5">
+            <b>5 × 5</b>
             <small>25 boxes</small>
         </button>
+
+        <button class="board-btn" data-size="6">
+            <b>6 × 6</b>
+            <small>36 boxes</small>
+        </button>
+
     </div>
 </div>
 
-<div class="card">
-    <div class="player-title pink">💗 PLAYER 2</div>
-    <input id="p2Name" placeholder="Friend's name">
+<div class="player p2">
+    <h2>💗 PLAYER 2</h2>
+    <input id="player2Name" placeholder="Friend's name">
 </div>
 
 </div>
 
-<div class="online">
+<div class="card online">
 
 <h2>🌐 Play Online</h2>
+
 <p>Create a private room and send the room code to your friend.</p>
 
 <div class="online-row">
-    <button class="primary" id="createBtn">CREATE ROOM →</button>
 
-    <input id="roomInput" placeholder="ROOM CODE">
+<button class="create" id="createRoom">
+    CREATE ROOM →
+</button>
 
-    <button class="secondary" id="joinBtn">JOIN</button>
+<input id="roomCode" placeholder="ROOM CODE">
+
+<button class="join" id="joinRoom">
+    JOIN
+</button>
+
 </div>
 
 <div class="status" id="status"></div>
@@ -391,35 +396,40 @@ button{
 
 </div>
 
-<div class="game" id="gameSection">
+
+<div class="card game" id="gameScreen">
 
 <div class="room">
-    ROOM: <span id="roomCode"></span>
-    <button class="copy-btn" id="copyBtn">COPY</button>
+    <h2>ROOM: <span id="roomDisplay"></span></h2>
+    <button class="copy" id="copyRoom">COPY ROOM CODE</button>
 </div>
 
-<div class="turn" id="turnText"></div>
+<div class="turn" id="turnText">
+    Waiting...
+</div>
 
 <div class="players">
-    <div class="score blue">
-        🔵 <span id="player1Display">Player 1</span> :
-        <span id="score1">0</span>
-    </div>
 
-    <div class="score pink">
-        💗 <span id="player2Display">Player 2</span> :
-        <span id="score2">0</span>
-    </div>
+<div class="score blue">
+    🔵 <span id="p1Display">Player 1</span> :
+    <span id="p1Score">0</span>
+</div>
+
+<div class="score pink">
+    💗 <span id="p2Display">Player 2</span> :
+    <span id="p2Score">0</span>
+</div>
+
 </div>
 
 <div class="board-wrap">
-    <div class="game-board" id="gameBoard"></div>
+    <div class="board" id="board"></div>
 </div>
 
-<div class="waiting" id="waitingText"></div>
+<div class="winner" id="winner"></div>
 
-<button class="primary restart" id="newGameBtn">
-    NEW GAME
+<button class="newgame" id="backButton">
+    BACK TO HOME
 </button>
 
 </div>
@@ -429,30 +439,46 @@ button{
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.7.1/firebase-app.js";
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.7.1/firebase-app.js";
 
 import {
     getDatabase,
     ref,
     set,
+    get,
     onValue,
     runTransaction
-}
-from "https://www.gstatic.com/firebasejs/12.7.1/firebase-database.js";
+} from
+"https://www.gstatic.com/firebasejs/12.7.1/firebase-database.js";
 
 
 /* ================= FIREBASE ================= */
 
 const firebaseConfig = {
-    apiKey: "AIzaSySDyBcTvTDmMOMIhmKwx8x57QvGNWWhYlpx8",
-    authDomain: "dots-and-boxes-60439.firebaseapp.com",
-    databaseURL: "https://dots-and-boxes-60439-default-rtdb.firebaseio.com",
-    projectId: "dots-and-boxes-60439",
-    storageBucket: "dots-and-boxes-60439.firebasestorage.app",
-    messagingSenderId: "435400230088",
-    appId: "1:435400230088:web:834195f25c120b698911fd",
-    measurementId: "G-RLJ2ZQ08T0"
+
+    apiKey: "AIzaSyDBcTvTDmM0MIhmKwx8x57QvGNWhY1px8",
+
+    authDomain:
+    "dots-and-boxes-60439.firebaseapp.com",
+
+    databaseURL:
+    "https://dots-and-boxes-60439-default-rtdb.firebaseio.com",
+
+    projectId:
+    "dots-and-boxes-60439",
+
+    storageBucket:
+    "dots-and-boxes-60439.firebasestorage.app",
+
+    messagingSenderId:
+    "435400230088",
+
+    appId:
+    "1:435400230088:web:834195f25c120b698911fd",
+
+    measurementId:
+    "G-RLJ2ZQ08T0"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -462,10 +488,42 @@ const db = getDatabase(app);
 /* ================= VARIABLES ================= */
 
 let selectedSize = 4;
-let roomCode = "";
-let myPlayer = 0;
-let currentGame = null;
+let roomId = "";
+let myPlayer = "";
 let unsubscribe = null;
+
+
+/* ================= ELEMENTS ================= */
+
+const setupScreen =
+document.getElementById("setupScreen");
+
+const gameScreen =
+document.getElementById("gameScreen");
+
+const statusText =
+document.getElementById("status");
+
+const board =
+document.getElementById("board");
+
+const turnText =
+document.getElementById("turnText");
+
+const p1Display =
+document.getElementById("p1Display");
+
+const p2Display =
+document.getElementById("p2Display");
+
+const p1Score =
+document.getElementById("p1Score");
+
+const p2Score =
+document.getElementById("p2Score");
+
+const winner =
+document.getElementById("winner");
 
 
 /* ================= BOARD SELECT ================= */
@@ -474,84 +532,76 @@ document.querySelectorAll(".board-btn").forEach(btn => {
 
     btn.addEventListener("click", () => {
 
-        if(roomCode) return;
+        document
+        .querySelectorAll(".board-btn")
+        .forEach(b => b.classList.remove("active"));
 
-        document.querySelectorAll(".board-btn")
-        .forEach(x => x.classList.remove("selected"));
+        btn.classList.add("active");
 
-        btn.classList.add("selected");
-
-        selectedSize = Number(btn.dataset.size);
+        selectedSize =
+        Number(btn.dataset.size);
 
     });
 
 });
 
 
-/* ================= RANDOM ROOM ================= */
-
-function generateRoom(){
-
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-    let code = "";
-
-    for(let i=0;i<6;i++){
-        code += chars[Math.floor(Math.random()*chars.length)];
-    }
-
-    return code;
-}
-
-
 /* ================= CREATE ROOM ================= */
 
-document.getElementById("createBtn").onclick = async () => {
+document
+.getElementById("createRoom")
+.addEventListener("click", async () => {
 
-    const name = document.getElementById("p1Name").value.trim();
+    const name =
+    document.getElementById("player1Name")
+    .value.trim();
 
     if(!name){
-        alert("Pehle apna naam likho.");
+        statusText.textContent =
+        "Pehle apna naam enter karo.";
         return;
     }
 
-    roomCode = generateRoom();
-    myPlayer = 1;
+    roomId =
+    Math.random()
+    .toString(36)
+    .substring(2,8)
+    .toUpperCase();
 
-    const game = {
-        size:selectedSize,
+    myPlayer = "p1";
 
-        players:{
-            p1:{
-                name:name,
-                score:0
-            },
-            p2:{
-                name:"",
-                score:0
-            }
+    const roomData = {
+
+        size: selectedSize,
+
+        players: {
+            p1: name,
+            p2: ""
         },
 
-        turn:1,
+        scores: {
+            p1: 0,
+            p2: 0
+        },
 
-        lines:{},
+        turn: "p1",
 
-        boxes:{},
+        lines: {},
 
-        started:false,
+        boxes: {},
 
-        finished:false
+        finished: false
+
     };
 
     try{
 
         await set(
-            ref(db,"rooms/"+roomCode),
-            game
+            ref(db, "rooms/" + roomId),
+            roomData
         );
 
-        document.getElementById("status").innerText =
-            "Room created: "+roomCode;
+        openGame();
 
         listenRoom();
 
@@ -559,88 +609,124 @@ document.getElementById("createBtn").onclick = async () => {
 
         console.error(error);
 
-        document.getElementById("status").innerText =
-            "Firebase error: "+error.message;
+        statusText.textContent =
+        "Room create nahi hua. Firebase Rules check karo.";
 
     }
 
-};
+});
 
 
 /* ================= JOIN ROOM ================= */
 
-document.getElementById("joinBtn").onclick = async () => {
+document
+.getElementById("joinRoom")
+.addEventListener("click", async () => {
 
     const code =
-        document.getElementById("roomInput").value
-        .trim()
-        .toUpperCase();
+    document.getElementById("roomCode")
+    .value
+    .trim()
+    .toUpperCase();
 
     const name =
-        document.getElementById("p2Name").value.trim();
-
-    if(!name){
-        alert("Friend ka naam likho.");
-        return;
-    }
+    document.getElementById("player2Name")
+    .value
+    .trim();
 
     if(!code){
-        alert("Room code daalo.");
+
+        statusText.textContent =
+        "Room code enter karo.";
+
         return;
     }
 
-    roomCode = code;
-    myPlayer = 2;
+    if(!name){
 
-    const roomRef = ref(db,"rooms/"+roomCode);
+        statusText.textContent =
+        "Friend ka naam enter karo.";
 
-    onValue(roomRef, async snap => {
+        return;
+    }
 
-        if(!snap.exists()){
+    try{
 
-            document.getElementById("status").innerText =
-                "Room nahi mila.";
+        const snapshot =
+        await get(
+            ref(db, "rooms/" + code)
+        );
+
+        if(!snapshot.exists()){
+
+            statusText.textContent =
+            "Room nahi mila.";
 
             return;
         }
 
-        const data = snap.val();
+        const room =
+        snapshot.val();
 
-        if(data.players.p2 && data.players.p2.name){
+        if(room.players.p2){
 
-            if(data.players.p2.name !== name){
+            statusText.textContent =
+            "Room already full hai.";
 
-                document.getElementById("status").innerText =
-                    "Room already full.";
-
-                return;
-            }
-
-        }else{
-
-            await runTransaction(roomRef,current => {
-
-                if(!current) return current;
-
-                if(current.players.p2.name) return;
-
-                current.players.p2.name = name;
-                current.started = true;
-
-                return current;
-
-            });
-
+            return;
         }
+
+        roomId = code;
+
+        myPlayer = "p2";
+
+        await set(
+            ref(
+                db,
+                "rooms/" +
+                roomId +
+                "/players/p2"
+            ),
+            name
+        );
+
+        openGame();
 
         listenRoom();
 
-    },{onlyOnce:true});
+    }catch(error){
 
-};
+        console.error(error);
+
+        statusText.textContent =
+        "Join karne me problem hui.";
+
+    }
+
+});
 
 
-/* ================= LISTEN ROOM ================= */
+/* ================= OPEN GAME ================= */
+
+function openGame(){
+
+    setupScreen.style.display = "none";
+
+    gameScreen.style.display = "block";
+
+    document
+    .getElementById("roomDisplay")
+    .textContent = roomId;
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ================= LISTEN FIREBASE ================= */
 
 function listenRoom(){
 
@@ -648,21 +734,24 @@ function listenRoom(){
         unsubscribe();
     }
 
-    const roomRef = ref(db,"rooms/"+roomCode);
+    const roomRef =
+    ref(db, "rooms/" + roomId);
 
-    unsubscribe = onValue(roomRef,snap => {
+    unsubscribe =
+    onValue(roomRef, snapshot => {
 
-        if(!snap.exists()){
+        if(!snapshot.exists()){
 
-            document.getElementById("status").innerText =
-                "Room deleted.";
+            statusText.textContent =
+            "Room delete ho gaya.";
 
             return;
         }
 
-        currentGame = snap.val();
+        const room =
+        snapshot.val();
 
-        renderGame();
+        renderGame(room);
 
     });
 
@@ -671,226 +760,270 @@ function listenRoom(){
 
 /* ================= RENDER GAME ================= */
 
-function renderGame(){
+function renderGame(room){
 
-    const game = currentGame;
+    p1Display.textContent =
+    room.players?.p1 || "Player 1";
 
-    document.getElementById("setupSection").style.display = "none";
+    p2Display.textContent =
+    room.players?.p2 || "Waiting...";
 
-    document.getElementById("gameSection").style.display = "block";
+    p1Score.textContent =
+    room.scores?.p1 || 0;
 
-    document.getElementById("roomCode").innerText = roomCode;
-
-    document.getElementById("player1Display").innerText =
-        game.players.p1.name || "Player 1";
-
-    document.getElementById("player2Display").innerText =
-        game.players.p2.name || "Waiting...";
-
-    document.getElementById("score1").innerText =
-        game.players.p1.score || 0;
-
-    document.getElementById("score2").innerText =
-        game.players.p2.score || 0;
+    p2Score.textContent =
+    room.scores?.p2 || 0;
 
 
-    if(!game.players.p2.name){
+    if(!room.players?.p2){
 
-        document.getElementById("turnText").innerText =
-            "Waiting for Player 2...";
-
-        document.getElementById("waitingText").innerText =
-            "Room code share karo: "+roomCode;
+        turnText.textContent =
+        "💗 Waiting for Player 2...";
 
     }else{
 
-        const turnPlayer = game.turn;
+        if(room.turn === myPlayer){
 
-        const turnName =
-            turnPlayer === 1
-            ? game.players.p1.name
-            : game.players.p2.name;
-
-        if(turnPlayer === myPlayer){
-
-            document.getElementById("turnText").innerText =
-                "🟢 YOUR TURN — "+turnName;
+            turnText.textContent =
+            "🔥 YOUR TURN";
 
         }else{
 
-            document.getElementById("turnText").innerText =
-                "🔴 "+turnName+"'S TURN";
+            const name =
+            room.turn === "p1"
+            ? room.players.p1
+            : room.players.p2;
+
+            turnText.textContent =
+            "⏳ " + name + "'s TURN";
 
         }
 
-        document.getElementById("waitingText").innerText = "";
-
     }
 
-    drawBoard();
+
+    drawBoard(room);
+
+    if(room.finished){
+
+        if(room.scores.p1 >
+           room.scores.p2){
+
+            winner.textContent =
+            "🏆 " +
+            room.players.p1 +
+            " WINS!";
+
+        }else if(room.scores.p2 >
+                 room.scores.p1){
+
+            winner.textContent =
+            "🏆 " +
+            room.players.p2 +
+            " WINS!";
+
+        }else{
+
+            winner.textContent =
+            "🤝 DRAW!";
+
+        }
+
+    }else{
+
+        winner.textContent = "";
+
+    }
 
 }
 
 
 /* ================= DRAW BOARD ================= */
 
-function drawBoard(){
-
-    const game = currentGame;
-
-    const size = Number(game.size);
-
-    const board = document.getElementById("gameBoard");
+function drawBoard(room){
 
     board.innerHTML = "";
 
-    const cell = Math.min(
-        100,
-        Math.max(65,700/(size-1))
+    const n =
+    Number(room.size);
+
+    const points =
+    n + 1;
+
+    const boardPixel =
+    Math.min(
+        600,
+        window.innerWidth - 60
     );
 
-    const width = (size-1)*cell;
-    const height = width;
+    const gap =
+    boardPixel / n;
 
-    board.style.width = width+"px";
-    board.style.height = height+"px";
+    board.style.width =
+    boardPixel + "px";
+
+    board.style.height =
+    boardPixel + "px";
 
 
-    /* DOTS */
+    /* ===== BOXES ===== */
 
-    for(let r=0;r<size;r++){
+    for(let r=0;r<n;r++){
 
-        for(let c=0;c<size;c++){
+        for(let c=0;c<n;c++){
 
-            const dot = document.createElement("div");
+            const key =
+            r + "_" + c;
+
+            const owner =
+            room.boxes?.[key];
+
+            if(owner){
+
+                const box =
+                document.createElement("div");
+
+                box.className =
+                "box " + owner;
+
+                box.style.left =
+                (c * gap + 8) + "px";
+
+                box.style.top =
+                (r * gap + 8) + "px";
+
+                box.style.width =
+                (gap - 16) + "px";
+
+                box.style.height =
+                (gap - 16) + "px";
+
+                box.textContent =
+                owner === "p1"
+                ? "🔵"
+                : "💗";
+
+                board.appendChild(box);
+
+            }
+
+        }
+
+    }
+
+
+    /* ===== HORIZONTAL LINES ===== */
+
+    for(let r=0;r<points;r++){
+
+        for(let c=0;c<n;c++){
+
+            const key =
+            "h_" + r + "_" + c;
+
+            const line =
+            document.createElement("div");
+
+            line.className =
+            "line horizontal";
+
+            line.style.left =
+            (c * gap + 4) + "px";
+
+            line.style.top =
+            (r * gap - 4) + "px";
+
+            line.style.width =
+            (gap - 8) + "px";
+
+            if(room.lines?.[key]){
+
+                line.classList.add(
+                    room.lines[key]
+                );
+
+            }else{
+
+                line.addEventListener(
+                    "click",
+                    () => makeMove(key)
+                );
+
+            }
+
+            board.appendChild(line);
+
+        }
+
+    }
+
+
+    /* ===== VERTICAL LINES ===== */
+
+    for(let r=0;r<n;r++){
+
+        for(let c=0;c<points;c++){
+
+            const key =
+            "v_" + r + "_" + c;
+
+            const line =
+            document.createElement("div");
+
+            line.className =
+            "line vertical";
+
+            line.style.left =
+            (c * gap - 4) + "px";
+
+            line.style.top =
+            (r * gap + 4) + "px";
+
+            line.style.height =
+            (gap - 8) + "px";
+
+            if(room.lines?.[key]){
+
+                line.classList.add(
+                    room.lines[key]
+                );
+
+            }else{
+
+                line.addEventListener(
+                    "click",
+                    () => makeMove(key)
+                );
+
+            }
+
+            board.appendChild(line);
+
+        }
+
+    }
+
+
+    /* ===== DOTS ===== */
+
+    for(let r=0;r<points;r++){
+
+        for(let c=0;c<points;c++){
+
+            const dot =
+            document.createElement("div");
 
             dot.className = "dot";
 
-            dot.style.left = (c*cell)+"px";
-            dot.style.top = (r*cell)+"px";
+            dot.style.left =
+            (c * gap) + "px";
+
+            dot.style.top =
+            (r * gap) + "px";
 
             board.appendChild(dot);
 
         }
-
-    }
-
-
-    /* HORIZONTAL LINES */
-
-    for(let r=0;r<size;r++){
-
-        for(let c=0;c<size-1;c++){
-
-            const key = "h_"+r+"_"+c;
-
-            const line = document.createElement("div");
-
-            line.className = "line h-line";
-
-            line.style.left = (c*cell)+"px";
-            line.style.top = (r*cell)+"px";
-            line.style.width = cell+"px";
-
-            if(game.lines && game.lines[key]){
-
-                line.classList.add("used");
-
-                line.style.background =
-                    game.lines[key] === 1
-                    ? "#22d3ee"
-                    : "#ff4fa3";
-
-            }else{
-
-                line.onclick = () => makeMove(key);
-
-            }
-
-            board.appendChild(line);
-
-        }
-
-    }
-
-
-    /* VERTICAL LINES */
-
-    for(let r=0;r<size-1;r++){
-
-        for(let c=0;c<size;c++){
-
-            const key = "v_"+r+"_"+c;
-
-            const line = document.createElement("div");
-
-            line.className = "line v-line";
-
-            line.style.left = (c*cell)+"px";
-            line.style.top = (r*cell)+"px";
-            line.style.height = cell+"px";
-
-            if(game.lines && game.lines[key]){
-
-                line.classList.add("used");
-
-                line.style.background =
-                    game.lines[key] === 1
-                    ? "#22d3ee"
-                    : "#ff4fa3";
-
-            }else{
-
-                line.onclick = () => makeMove(key);
-
-            }
-
-            board.appendChild(line);
-
-        }
-
-    }
-
-
-    /* BOXES */
-
-    if(game.boxes){
-
-        Object.keys(game.boxes).forEach(key => {
-
-            const parts = key.split("_");
-
-            const r = Number(parts[1]);
-            const c = Number(parts[2]);
-
-            const box = document.createElement("div");
-
-            box.className =
-                "box "+
-                (game.boxes[key] === 1
-                ? "blue-box"
-                : "pink-box");
-
-            box.style.left =
-                (c*cell+7)+"px";
-
-            box.style.top =
-                (r*cell+7)+"px";
-
-            box.style.width =
-                (cell-14)+"px";
-
-            box.style.height =
-                (cell-14)+"px";
-
-            box.innerText =
-                game.boxes[key] === 1
-                ? "🔵"
-                : "💗";
-
-            board.appendChild(box);
-
-        });
 
     }
 
@@ -899,241 +1032,225 @@ function drawBoard(){
 
 /* ================= MAKE MOVE ================= */
 
-async function makeMove(lineKey){
+async function makeMove(key){
 
-    if(!currentGame) return;
+    const roomRef =
+    ref(db, "rooms/" + roomId);
 
-    if(!currentGame.players.p2.name) return;
+    try{
 
-    /*
-       IMPORTANT:
+        await runTransaction(
+            roomRef,
+            room => {
 
-       Sirf current turn wala player move kar sakta hai.
-       Ye check local UI ke liye hai.
-       Final check Firebase transaction ke andar bhi hai.
-    */
+                if(!room){
+                    return room;
+                }
 
-    if(Number(currentGame.turn) !== Number(myPlayer)){
+                /* Player 2 not joined */
+                if(!room.players?.p2){
+                    return;
+                }
 
-        return;
+                /* Game finished */
+                if(room.finished){
+                    return;
+                }
 
-    }
+                /* NOT MY TURN */
+                if(room.turn !== myPlayer){
+                    return;
+                }
 
-    if(currentGame.lines && currentGame.lines[lineKey]){
+                /* LINE ALREADY USED */
+                if(room.lines?.[key]){
+                    return;
+                }
 
-        return;
+                if(!room.lines){
+                    room.lines = {};
+                }
 
-    }
+                if(!room.boxes){
+                    room.boxes = {};
+                }
 
-
-    const roomRef = ref(db,"rooms/"+roomCode);
-
-
-    await runTransaction(roomRef,current => {
-
-        if(!current) return current;
-
-        /* PLAYER TURN CHECK */
-
-        if(Number(current.turn) !== Number(myPlayer)){
-
-            return;
-
-        }
-
-
-        /* LINE ALREADY USED */
-
-        if(current.lines && current.lines[lineKey]){
-
-            return;
-
-        }
-
-
-        if(!current.lines){
-            current.lines = {};
-        }
-
-        if(!current.boxes){
-            current.boxes = {};
-        }
+                if(!room.scores){
+                    room.scores = {
+                        p1:0,
+                        p2:0
+                    };
+                }
 
 
-        /* ADD LINE */
+                /* DRAW LINE */
 
-        current.lines[lineKey] = myPlayer;
-
-
-        /*
-           Check completed boxes
-        */
-
-        const size = Number(current.size);
-
-        let completed = 0;
+                room.lines[key] =
+                myPlayer;
 
 
-        /* Check every box */
-
-        for(let r=0;r<size-1;r++){
-
-            for(let c=0;c<size-1;c++){
-
-                const boxKey = "b_"+r+"_"+c;
-
-                if(current.boxes[boxKey]) continue;
+                let completed = 0;
 
 
-                const top =
-                    "h_"+r+"_"+c;
+                /* CHECK ALL BOXES */
 
-                const bottom =
-                    "h_"+(r+1)+"_"+c;
+                const n =
+                Number(room.size);
 
-                const left =
-                    "v_"+r+"_"+c;
+                for(let r=0;r<n;r++){
 
-                const right =
-                    "v_"+r+"_"+(c+1);
+                    for(let c=0;c<n;c++){
+
+                        const boxKey =
+                        r + "_" + c;
+
+                        if(room.boxes[boxKey]){
+                            continue;
+                        }
 
 
-                if(
-                    current.lines[top] &&
-                    current.lines[bottom] &&
-                    current.lines[left] &&
-                    current.lines[right]
-                ){
+                        const top =
+                        "h_" + r + "_" + c;
 
-                    current.boxes[boxKey] = myPlayer;
+                        const bottom =
+                        "h_" + (r+1) + "_" + c;
 
-                    current.players[
-                        "p"+myPlayer
-                    ].score =
-                        Number(
-                            current.players[
-                                "p"+myPlayer
-                            ].score || 0
-                        ) + 1;
+                        const left =
+                        "v_" + r + "_" + c;
 
-                    completed++;
+                        const right =
+                        "v_" + r + "_" + (c+1);
+
+
+                        if(
+                            room.lines[top] &&
+                            room.lines[bottom] &&
+                            room.lines[left] &&
+                            room.lines[right]
+                        ){
+
+                            room.boxes[boxKey] =
+                            myPlayer;
+
+                            room.scores[myPlayer]++;
+
+                            completed++;
+
+                        }
+
+                    }
 
                 }
 
+
+                /* COUNT BOXES */
+
+                let totalBoxes = 0;
+
+                if(room.boxes){
+
+                    totalBoxes =
+                    Object.keys(room.boxes).length;
+
+                }
+
+
+                /* GAME FINISHED */
+
+                if(
+                    totalBoxes >=
+                    n * n
+                ){
+
+                    room.finished = true;
+
+                }
+
+
+                /*
+                 * IMPORTANT:
+                 * Box bana -> SAME PLAYER
+                 * Box nahi bana -> TURN CHANGE
+                 */
+
+                if(
+                    completed === 0 &&
+                    !room.finished
+                ){
+
+                    room.turn =
+                    myPlayer === "p1"
+                    ? "p2"
+                    : "p1";
+
+                }
+
+
+                return room;
+
             }
+        );
 
-        }
+    }catch(error){
 
+        console.error(
+            "Move error:",
+            error
+        );
 
-        /*
-           IMPORTANT GAME LOGIC:
-
-           Box banaya -> same player ka turn rahega.
-
-           Box nahi banaya -> turn opponent ko jayega.
-        */
-
-        if(completed === 0){
-
-            current.turn =
-                myPlayer === 1 ? 2 : 1;
-
-        }else{
-
-            current.turn = myPlayer;
-
-        }
-
-
-        /* GAME FINISHED */
-
-        const totalBoxes =
-            (size-1)*(size-1);
-
-        const boxCount =
-            current.boxes
-            ? Object.keys(current.boxes).length
-            : 0;
-
-        if(boxCount >= totalBoxes){
-
-            current.finished = true;
-
-            current.turn = 0;
-
-        }
-
-
-        return current;
-
-    });
+    }
 
 }
 
 
 /* ================= COPY ROOM ================= */
 
-document.getElementById("copyBtn").onclick = async () => {
+document
+.getElementById("copyRoom")
+.addEventListener("click", async () => {
 
     try{
 
-        await navigator.clipboard.writeText(roomCode);
+        await navigator.clipboard.writeText(roomId);
 
-        document.getElementById("copyBtn").innerText =
-            "COPIED!";
+        document
+        .getElementById("copyRoom")
+        .textContent =
+        "COPIED ✓";
 
         setTimeout(() => {
 
-            document.getElementById("copyBtn").innerText =
-                "COPY";
+            document
+            .getElementById("copyRoom")
+            .textContent =
+            "COPY ROOM CODE";
 
         },1500);
 
-    }catch(e){
+    }catch(error){
 
-        alert("Room Code: "+roomCode);
-
-    }
-
-};
-
-
-/* ================= NEW GAME ================= */
-
-document.getElementById("newGameBtn").onclick = async () => {
-
-    if(!roomCode) return;
-
-    if(myPlayer !== 1){
-
-        alert("Sirf Player 1 new game start kar sakta hai.");
-
-        return;
+        alert(
+            "Room Code: " + roomId
+        );
 
     }
 
-    const roomRef = ref(db,"rooms/"+roomCode);
+});
 
-    await runTransaction(roomRef,current => {
 
-        if(!current) return current;
+/* ================= BACK ================= */
 
-        current.turn = 1;
+document
+.getElementById("backButton")
+.addEventListener("click", () => {
 
-        current.lines = {};
+    if(unsubscribe){
+        unsubscribe();
+    }
 
-        current.boxes = {};
+    location.reload();
 
-        current.finished = false;
-
-        current.players.p1.score = 0;
-        current.players.p2.score = 0;
-
-        return current;
-
-    });
-
-};
+});
 
 </script>
 
