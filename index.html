@@ -2,156 +2,160 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dots Battle - Online</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dots Battle</title>
 
 <style>
 *{box-sizing:border-box}
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    color:white;
-    background:linear-gradient(135deg,#171b2d,#3a2020);
-    min-height:100vh;
-    padding:30px;
+ margin:0;
+ font-family:Arial,sans-serif;
+ color:white;
+ background:linear-gradient(135deg,#171b2d,#3a2020);
+ min-height:100vh;
+ padding:30px;
 }
 .container{max-width:1100px;margin:auto}
-h1{text-align:center;font-size:38px}
+h1{text-align:center;font-size:40px}
 .subtitle{text-align:center;color:#aaa;margin-bottom:30px}
 
 .top{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:20px;
+ display:grid;
+ grid-template-columns:1fr 1fr 1fr;
+ gap:20px;
 }
 .card{
-    background:#151a2c;
-    border-radius:20px;
-    padding:25px;
-    border:1px solid #252d46;
+ background:#151a2c;
+ border-radius:20px;
+ padding:25px;
+ border:1px solid #252d46;
 }
-.card h2{margin-top:0}
 input{
-    width:100%;
-    padding:16px;
-    border-radius:12px;
-    border:1px solid #34405e;
-    background:#080d1c;
-    color:white;
-    font-size:16px;
+ width:100%;
+ padding:16px;
+ border-radius:12px;
+ border:1px solid #34405e;
+ background:#080d1c;
+ color:white;
+ font-size:16px;
 }
+
 .boards{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
 }
 .board{
-    padding:20px;
-    background:#080d1c;
-    border:1px solid #34405e;
-    border-radius:15px;
-    color:white;
-    cursor:pointer;
-    text-align:center;
+ padding:20px;
+ background:#080d1c;
+ border:1px solid #34405e;
+ border-radius:15px;
+ color:white;
+ cursor:pointer;
+ text-align:center;
+ user-select:none;
 }
+.board:hover{background:#19354a}
 .board.selected{
-    border-color:#18cfff;
-    background:#19354a;
+ border-color:#18cfff;
+ background:#19354a;
 }
+
 button{
-    border:0;
-    border-radius:12px;
-    padding:15px 25px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
+ border:0;
+ border-radius:12px;
+ padding:15px 25px;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
 }
 .create{
-    background:linear-gradient(90deg,#168cff,#e12bb1);
-    color:white;
+ background:linear-gradient(90deg,#168cff,#e12bb1);
+ color:white;
 }
 .join{
-    background:#24304a;
-    color:white;
+ background:#24304a;
+ color:white;
 }
+
 .online{
-    margin-top:25px;
-    background:#0d1426;
-    padding:25px;
-    border-radius:20px;
+ margin-top:25px;
+ background:#0d1426;
+ padding:25px;
+ border-radius:20px;
 }
 .room{
-    display:flex;
-    gap:10px;
+ display:flex;
+ gap:10px;
 }
 .status{
-    margin-top:15px;
-    color:#ff5fa2;
+ margin-top:15px;
+ color:#ff5fa2;
 }
+
 #game{
-    display:none;
-    margin-top:30px;
-    background:#10162a;
-    padding:25px;
-    border-radius:20px;
-    text-align:center;
+ display:none;
+ margin-top:30px;
+ background:#10162a;
+ padding:25px;
+ border-radius:20px;
+ text-align:center;
 }
+#roomInfo{color:#20d7ff}
+
 #board{
-    margin:25px auto;
-    display:grid;
-    gap:0;
-    width:min(500px,90vw);
+ margin:25px auto;
+ display:grid;
+ width:min(500px,90vw);
+ aspect-ratio:1;
 }
 .cell{
-    position:relative;
-    aspect-ratio:1;
+ position:relative;
 }
 .dot{
-    width:14px;
-    height:14px;
-    background:white;
-    border-radius:50%;
-    position:absolute;
-    z-index:5;
-    transform:translate(-50%,-50%);
+ width:14px;
+ height:14px;
+ background:white;
+ border-radius:50%;
+ position:absolute;
+ left:0;
+ top:0;
+ transform:translate(-50%,-50%);
+ z-index:5;
 }
 .line{
-    position:absolute;
-    background:#37415d;
-    cursor:pointer;
-    z-index:2;
+ position:absolute;
+ background:#37415d;
+ cursor:pointer;
+ z-index:2;
 }
 .line:hover{background:#22cfff}
 .h{
-    height:8px;
-    left:7px;
-    right:7px;
-    top:-4px;
-    border-radius:10px;
+ height:8px;
+ left:7px;
+ right:0;
+ top:-4px;
+ border-radius:10px;
 }
 .v{
-    width:8px;
-    top:7px;
-    bottom:7px;
-    left:-4px;
-    border-radius:10px;
+ width:8px;
+ top:7px;
+ bottom:0;
+ left:-4px;
+ border-radius:10px;
 }
 .box{
-    background:#27304c;
-    border-radius:8px;
-    margin:7px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
-    font-size:20px;
-}
-#roomInfo{
-    font-size:20px;
-    color:#20d7ff;
+ position:absolute;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:bold;
+ font-size:20px;
+ z-index:1;
 }
 @media(max-width:800px){
-    .top{grid-template-columns:1fr}
+ .top{grid-template-columns:1fr}
+ .room{flex-direction:column}
 }
 </style>
 </head>
@@ -176,23 +180,28 @@ button{
 <h2 style="text-align:center">SELECT BOARD</h2>
 
 <div class="boards">
+
 <div class="board selected" onclick="selectSize(4,this)">
-<b>4 × 4</b><br><small>9 boxes</small>
+<b>4 × 4</b><br>
+<small>9 boxes</small>
 </div>
 
 <div class="board" onclick="selectSize(3,this)">
-<b>3 × 3</b><br><small>4 boxes</small>
+<b>3 × 3</b><br>
+<small>4 boxes</small>
 </div>
 
 <div class="board" onclick="selectSize(5,this)">
-<b>5 × 5</b><br><small>16 boxes</small>
+<b>5 × 5</b><br>
+<small>16 boxes</small>
 </div>
 
 <div class="board" onclick="selectSize(6,this)">
-<b>6 × 6</b><br><small>25 boxes</small>
-</div>
+<b>6 × 6</b><br>
+<small>25 boxes</small>
 </div>
 
+</div>
 </div>
 
 <div class="card">
@@ -203,167 +212,201 @@ button{
 </div>
 
 <div class="online">
+
 <h2>🌐 Play Online</h2>
 <p>Create a private room and send the room code to your friend.</p>
 
 <div class="room">
 <button class="create" onclick="createRoom()">CREATE ROOM →</button>
+
 <input id="roomCode" placeholder="ROOM CODE">
+
 <button class="join" onclick="joinRoom()">JOIN</button>
 </div>
 
 <div id="status" class="status">
-Connecting to online mode...
-</div>
+Ready to play.
 </div>
 
+</div>
 </div>
 
 <div id="game">
+
 <h2 id="roomInfo"></h2>
 <h3 id="turn"></h3>
+<div id="score"></div>
 <div id="board"></div>
-</div>
 
 </div>
 
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.7.1/firebase-app.js";
-
-import {
-getDatabase,
-ref,
-set,
-get,
-onValue,
-update
-}
-from "https://www.gstatic.com/firebasejs/12.7.1/firebase-database.js";
+</div>
 
 
-/* FIREBASE CONFIG */
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+<script>
 
 const firebaseConfig = {
-apiKey: "AIzaSyDBcTvTDmM0MIhmKwx8x57QvGNWWhY1px8",
-authDomain: "dots-and-boxes-60439.firebaseapp.com",
-databaseURL: "https://dots-and-boxes-60439-default-rtdb.firebaseio.com",
-projectId: "dots-and-boxes-60439",
-storageBucket: "dots-and-boxes-60439.firebasestorage.app",
-messagingSenderId: "435400230088",
-appId: "1:435400230088:web:834195f25c120b698911fd"
+ apiKey:"AIzaSyDBcTvTDmM0MIhmKwx8x57QvGNWWhY1px8",
+ authDomain:"dots-and-boxes-60439.firebaseapp.com",
+ databaseURL:"https://dots-and-boxes-60439-default-rtdb.firebaseio.com",
+ projectId:"dots-and-boxes-60439",
+ storageBucket:"dots-and-boxes-60439.firebasestorage.app",
+ messagingSenderId:"435400230088",
+ appId:"1:435400230088:web:834195f25c120b698911fd"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
 
-let size = 4;
-let roomId = "";
-let player = "";
-let gameData = null;
+let size=4;
+let roomId="";
+let player="";
+let gameData=null;
 
 
-/* BOARD SIZE */
+/* BOARD SELECT */
 
-window.selectSize = function(n, el){
-    size=n;
-    document.querySelectorAll(".board").forEach(x=>x.classList.remove("selected"));
-    el.classList.add("selected");
-};
+function selectSize(n,el){
+
+ size=n;
+
+ document.querySelectorAll(".board")
+ .forEach(x=>x.classList.remove("selected"));
+
+ el.classList.add("selected");
+
+}
 
 
 /* CREATE ROOM */
 
-window.createRoom = async function(){
+async function createRoom(){
 
-    const name = document.getElementById("p1").value.trim();
+ const name=document.getElementById("p1").value.trim();
 
-    if(!name){
-        alert("Pehle apna naam likho.");
-        return;
-    }
+ if(!name){
+   alert("Pehle Player 1 ka naam likho.");
+   return;
+ }
 
-    roomId = Math.random().toString(36).substring(2,8).toUpperCase();
-    player = "p1";
+ roomId=Math.random()
+ .toString(36)
+ .substring(2,8)
+ .toUpperCase();
 
-    const data = {
-        size:size,
-        p1:name,
-        p2:"",
-        turn:"p1",
-        status:"waiting",
-        lines:{},
-        boxes:{}
-    };
+ player="p1";
 
-    await set(ref(db,"rooms/"+roomId),data);
+ const data={
+   size:size,
+   p1:name,
+   p2:"",
+   turn:"p1",
+   lines:{},
+   boxes:{},
+   score1:0,
+   score2:0
+ };
 
-    document.getElementById("roomCode").value=roomId;
-    document.getElementById("status").innerHTML=
-        "Room created! Code apne friend ko bhejo: <b>"+roomId+"</b>";
+ try{
 
-    listenRoom();
-};
+   await db.ref("rooms/"+roomId).set(data);
+
+   document.getElementById("roomCode").value=roomId;
+
+   document.getElementById("status").innerHTML=
+   "🟢 Room created! Code: <b>"+roomId+"</b><br>Friend ko ye code bhejo.";
+
+   listenRoom();
+
+ }catch(error){
+
+   document.getElementById("status").innerHTML=
+   "❌ Firebase Error: "+error.message;
+
+ }
+
+}
 
 
 /* JOIN ROOM */
 
-window.joinRoom = async function(){
+async function joinRoom(){
 
-    const code=document.getElementById("roomCode").value.trim().toUpperCase();
-    const name=document.getElementById("p2").value.trim();
+ const code=document.getElementById("roomCode")
+ .value.trim().toUpperCase();
 
-    if(!code){
-        alert("Room code daalo.");
-        return;
-    }
+ const name=document.getElementById("p2")
+ .value.trim();
 
-    if(!name){
-        alert("Friend name daalo.");
-        return;
-    }
+ if(!code){
+   alert("Room code daalo.");
+   return;
+ }
 
-    const roomRef=ref(db,"rooms/"+code);
-    const snap=await get(roomRef);
+ if(!name){
+   alert("Player 2 ka naam likho.");
+   return;
+ }
 
-    if(!snap.exists()){
-        alert("Room nahi mila.");
-        return;
-    }
+ try{
 
-    roomId=code;
-    player="p2";
+   const roomRef=db.ref("rooms/"+code);
+   const snap=await roomRef.once("value");
 
-    await update(roomRef,{
-        p2:name,
-        status:"playing"
-    });
+   if(!snap.exists()){
+     alert("Room nahi mila.");
+     return;
+   }
 
-    document.getElementById("status").innerHTML=
-        "Room joined successfully!";
+   roomId=code;
+   player="p2";
 
-    listenRoom();
-};
+   await roomRef.update({
+     p2:name
+   });
+
+   document.getElementById("status").innerHTML=
+   "🟢 Room joined!";
+
+   listenRoom();
+
+ }catch(error){
+
+   document.getElementById("status").innerHTML=
+   "❌ Firebase Error: "+error.message;
+
+ }
+
+}
 
 
-/* LISTEN TO FIREBASE */
+/* LISTEN */
 
 function listenRoom(){
 
-    onValue(ref(db,"rooms/"+roomId),(snap)=>{
+ db.ref("rooms/"+roomId).on("value",function(snap){
 
-        if(!snap.exists()) return;
+   if(!snap.exists()) return;
 
-        gameData=snap.val();
+   gameData=snap.val();
 
-        if(gameData.p2){
-            document.getElementById("status").innerHTML=
-                "🟢 Friend connected!";
-        }
+   size=Number(gameData.size);
 
-        showGame();
-    });
+   if(gameData.p2){
+
+     document.getElementById("status").innerHTML=
+     "🟢 Friend connected!";
+
+   }
+
+   showGame();
+
+ });
+
 }
 
 
@@ -371,23 +414,31 @@ function listenRoom(){
 
 function showGame(){
 
-    document.getElementById("setup").style.display="none";
-    document.getElementById("game").style.display="block";
+ document.getElementById("setup").style.display="none";
+ document.getElementById("game").style.display="block";
 
-    document.getElementById("roomInfo").innerHTML=
-        "ROOM: "+roomId;
+ document.getElementById("roomInfo").innerHTML=
+ "ROOM: "+roomId;
 
-    const currentName=
-        gameData.turn==="p1"
-        ?gameData.p1
-        :gameData.p2;
+ const currentName=
+ gameData.turn==="p1"
+ ?gameData.p1
+ :gameData.p2;
 
-    document.getElementById("turn").innerHTML=
-        gameData.turn===player
-        ? "🟢 Your Turn"
-        : "🔴 "+currentName+"'s Turn";
+ document.getElementById("turn").innerHTML=
+ gameData.turn===player
+ ? "🟢 YOUR TURN"
+ : "🔴 "+currentName+"'S TURN";
 
-    drawBoard();
+ document.getElementById("score").innerHTML=
+ "🔵 "+gameData.p1+" : "+
+ (gameData.score1||0)+
+ " &nbsp;&nbsp; ❤️ "+
+ gameData.p2+" : "+
+ (gameData.score2||0);
+
+ drawBoard();
+
 }
 
 
@@ -395,95 +446,90 @@ function showGame(){
 
 function drawBoard(){
 
-    const board=document.getElementById("board");
+ const board=document.getElementById("board");
 
-    board.innerHTML="";
+ board.innerHTML="";
 
-    const dots=size;
-    const total=dots*dots;
+ board.style.gridTemplateColumns=
+ `repeat(${size},1fr)`;
 
-    board.style.gridTemplateColumns=
-        `repeat(${dots},1fr)`;
+ board.style.gridTemplateRows=
+ `repeat(${size},1fr)`;
 
-    for(let r=0;r<dots;r++){
+ for(let r=0;r<size;r++){
 
-        for(let c=0;c<dots;c++){
+   for(let c=0;c<size;c++){
 
-            const cell=document.createElement("div");
-            cell.className="cell";
+     const cell=document.createElement("div");
+     cell.className="cell";
 
-            /* DOT */
+     const dot=document.createElement("div");
+     dot.className="dot";
 
-            const dot=document.createElement("div");
-            dot.className="dot";
+     cell.appendChild(dot);
 
-            dot.style.left="0";
-            dot.style.top="0";
 
-            cell.appendChild(dot);
+     /* HORIZONTAL */
 
-            /* HORIZONTAL LINE */
+     if(c<size-1){
 
-            if(c<dots-1){
+       const line=document.createElement("div");
 
-                const line=document.createElement("div");
+       line.className="line h";
 
-                line.className="line h";
+       const key="h_"+r+"_"+c;
 
-                const key="h_"+r+"_"+c;
+       if(gameData.lines && gameData.lines[key]){
 
-                if(gameData.lines && gameData.lines[key]){
-                    line.style.background=
-                        gameData.lines[key]==="p1"
-                        ?" #19bfff"
-                        :"#ff3da8";
-                }
+         line.style.background=
+         gameData.lines[key]==="p1"
+         ?" #19bfff"
+         :"#ff3da8";
 
-                line.onclick=()=>makeMove(key);
+       }
 
-                cell.appendChild(line);
-            }
+       line.onclick=function(){
+         makeMove(key);
+       };
 
-            /* VERTICAL LINE */
+       cell.appendChild(line);
 
-            if(r<dots-1){
+     }
 
-                const line=document.createElement("div");
 
-                line.className="line v";
+     /* VERTICAL */
 
-                const key="v_"+r+"_"+c;
+     if(r<size-1){
 
-                if(gameData.lines && gameData.lines[key]){
-                    line.style.background=
-                        gameData.lines[key]==="p1"
-                        ?" #19bfff"
-                        :"#ff3da8";
-                }
+       const line=document.createElement("div");
 
-                line.onclick=()=>makeMove(key);
+       line.className="line v";
 
-                cell.appendChild(line);
-            }
+       const key="v_"+r+"_"+c;
 
-            board.appendChild(cell);
-        }
-    }
+       if(gameData.lines && gameData.lines[key]){
 
-    /* DOT POSITIONS */
+         line.style.background=
+         gameData.lines[key]==="p1"
+         ?" #19bfff"
+         :"#ff3da8";
 
-    const cells=board.children;
+       }
 
-    for(let r=0;r<dots;r++){
-        for(let c=0;c<dots;c++){
+       line.onclick=function(){
+         makeMove(key);
+       };
 
-            const index=r*dots+c;
-            const dot=cells[index].querySelector(".dot");
+       cell.appendChild(line);
 
-            dot.style.left="0";
-            dot.style.top="0";
-        }
-    }
+     }
+
+     board.appendChild(cell);
+
+   }
+
+ }
+
 }
 
 
@@ -491,25 +537,26 @@ function drawBoard(){
 
 async function makeMove(key){
 
-    if(!gameData) return;
+ if(!gameData) return;
 
-    if(gameData.turn!==player){
-        return;
-    }
+ if(gameData.turn!==player) return;
 
-    if(gameData.lines && gameData.lines[key]){
-        return;
-    }
+ if(gameData.lines && gameData.lines[key]) return;
 
-    const updates={};
+ const lines=gameData.lines || {};
 
-    updates["rooms/"+roomId+"/lines/"+key]=player;
+ lines[key]=player;
 
-    let newTurn=player==="p1"?"p2":"p1";
+ const newTurn=
+ player==="p1" ? "p2" : "p1";
 
-    updates["rooms/"+roomId+"/turn"]=newTurn;
+ await db.ref("rooms/"+roomId).update({
 
-    await update(ref(db),updates);
+   lines:lines,
+   turn:newTurn
+
+ });
+
 }
 
 </script>
