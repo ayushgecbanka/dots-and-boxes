@@ -5,195 +5,153 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dots Battle - Online</title>
 
-<script src="https://www.gstatic.com/firebasejs/12.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.7.1/firebase-database-compat.js"></script>
-
 <style>
-*{
-    box-sizing:border-box;
-}
-
+*{box-sizing:border-box}
 body{
     margin:0;
-    min-height:100vh;
     font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#111827,#312e81,#111827);
     color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    background:linear-gradient(135deg,#171b2d,#3a2020);
+    min-height:100vh;
+    padding:30px;
 }
+.container{max-width:1100px;margin:auto}
+h1{text-align:center;font-size:38px}
+.subtitle{text-align:center;color:#aaa;margin-bottom:30px}
 
-.container{
-    width:95%;
-    max-width:850px;
-    text-align:center;
+.top{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:20px;
 }
-
-h1{
-    font-size:42px;
-    margin-bottom:5px;
-}
-
-.subtitle{
-    color:#cbd5e1;
-    margin-bottom:25px;
-}
-
 .card{
-    background:rgba(15,23,42,.92);
-    border:1px solid #475569;
+    background:#151a2c;
     border-radius:20px;
     padding:25px;
-    margin-bottom:20px;
+    border:1px solid #252d46;
 }
-
+.card h2{margin-top:0}
 input{
     width:100%;
-    max-width:350px;
-    padding:14px;
-    margin:8px;
-    border-radius:10px;
-    border:1px solid #475569;
-    background:#020617;
+    padding:16px;
+    border-radius:12px;
+    border:1px solid #34405e;
+    background:#080d1c;
     color:white;
     font-size:16px;
 }
-
-button{
-    padding:13px 22px;
-    margin:8px;
-    border:0;
-    border-radius:10px;
-    background:linear-gradient(90deg,#2563eb,#9333ea);
+.boards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+.board{
+    padding:20px;
+    background:#080d1c;
+    border:1px solid #34405e;
+    border-radius:15px;
     color:white;
-    font-weight:bold;
+    cursor:pointer;
+    text-align:center;
+}
+.board.selected{
+    border-color:#18cfff;
+    background:#19354a;
+}
+button{
+    border:0;
+    border-radius:12px;
+    padding:15px 25px;
     font-size:16px;
+    font-weight:bold;
     cursor:pointer;
 }
-
-button:hover{
-    opacity:.85;
+.create{
+    background:linear-gradient(90deg,#168cff,#e12bb1);
+    color:white;
 }
-
+.join{
+    background:#24304a;
+    color:white;
+}
+.online{
+    margin-top:25px;
+    background:#0d1426;
+    padding:25px;
+    border-radius:20px;
+}
+.room{
+    display:flex;
+    gap:10px;
+}
+.status{
+    margin-top:15px;
+    color:#ff5fa2;
+}
 #game{
     display:none;
+    margin-top:30px;
+    background:#10162a;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
 }
-
-.players{
-    display:flex;
-    justify-content:space-around;
-    margin-bottom:20px;
-    font-size:20px;
-}
-
-.p1{
-    color:#38bdf8;
-}
-
-.p2{
-    color:#f472b6;
-}
-
-#status{
-    margin:15px;
-    font-size:20px;
-    font-weight:bold;
-}
-
 #board{
-    display:grid;
-    grid-template-columns:repeat(5,70px);
-    grid-template-rows:repeat(5,70px);
-    justify-content:center;
     margin:25px auto;
+    display:grid;
+    gap:0;
+    width:min(500px,90vw);
 }
-
+.cell{
+    position:relative;
+    aspect-ratio:1;
+}
 .dot{
-    width:18px;
-    height:18px;
+    width:14px;
+    height:14px;
     background:white;
     border-radius:50%;
     position:absolute;
-    z-index:3;
+    z-index:5;
+    transform:translate(-50%,-50%);
 }
-
-.point{
-    position:relative;
-    width:70px;
-    height:70px;
-}
-
 .line{
     position:absolute;
-    background:#38bdf8;
+    background:#37415d;
     cursor:pointer;
-    z-index:1;
+    z-index:2;
 }
-
-.hline{
-    width:52px;
-    height:7px;
-    left:9px;
-    top:32px;
-    border-radius:5px;
-}
-
-.vline{
-    width:7px;
-    height:52px;
-    left:32px;
-    top:9px;
-    border-radius:5px;
-}
-
-.box{
-    position:absolute;
-    width:55px;
-    height:55px;
+.line:hover{background:#22cfff}
+.h{
+    height:8px;
     left:7px;
+    right:7px;
+    top:-4px;
+    border-radius:10px;
+}
+.v{
+    width:8px;
     top:7px;
+    bottom:7px;
+    left:-4px;
+    border-radius:10px;
+}
+.box{
+    background:#27304c;
     border-radius:8px;
-    opacity:.35;
-}
-
-.room{
-    font-size:22px;
-    color:#facc15;
+    margin:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     font-weight:bold;
-    margin:10px;
+    font-size:20px;
 }
-
-.hidden{
-    display:none;
+#roomInfo{
+    font-size:20px;
+    color:#20d7ff;
 }
-
-@media(max-width:600px){
-    #board{
-        grid-template-columns:repeat(5,55px);
-        grid-template-rows:repeat(5,55px);
-    }
-
-    .point{
-        width:55px;
-        height:55px;
-    }
-
-    .hline{
-        width:40px;
-        left:8px;
-        top:25px;
-    }
-
-    .vline{
-        height:40px;
-        left:25px;
-        top:8px;
-    }
-
-    h1{
-        font-size:32px;
-    }
+@media(max-width:800px){
+    .top{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -202,540 +160,356 @@ button:hover{
 
 <div class="container">
 
-<h1>🎮 Dots Battle</h1>
-<div class="subtitle">Classic Dots & Boxes — Play Online</div>
+<h1>Dots Battle</h1>
+<div class="subtitle">Classic strategy. Modern battle.</div>
 
-<div id="lobby" class="card">
+<div id="setup">
 
-    <input id="name" placeholder="Enter your name">
+<div class="top">
 
-    <br>
-
-    <button onclick="createRoom()">CREATE ROOM</button>
-
-    <br>
-
-    <input id="roomCode" placeholder="Enter Room Code">
-
-    <br>
-
-    <button onclick="joinRoom()">JOIN ROOM</button>
-
-    <div id="message"></div>
-
+<div class="card">
+<h2>🔵 PLAYER 1</h2>
+<input id="p1" placeholder="Your name">
 </div>
 
-<div id="game" class="card">
+<div class="card">
+<h2 style="text-align:center">SELECT BOARD</h2>
 
-    <div class="room">
-        Room: <span id="roomDisplay"></span>
-    </div>
+<div class="boards">
+<div class="board selected" onclick="selectSize(4,this)">
+<b>4 × 4</b><br><small>9 boxes</small>
+</div>
 
-    <div class="players">
-        <div class="p1">
-            🔵 <span id="player1">Player 1</span>
-            <br>
-            Score: <span id="score1">0</span>
-        </div>
+<div class="board" onclick="selectSize(3,this)">
+<b>3 × 3</b><br><small>4 boxes</small>
+</div>
 
-        <div class="p2">
-            🩷 <span id="player2">Waiting...</span>
-            <br>
-            Score: <span id="score2">0</span>
-        </div>
-    </div>
+<div class="board" onclick="selectSize(5,this)">
+<b>5 × 5</b><br><small>16 boxes</small>
+</div>
 
-    <div id="status">Waiting for player 2...</div>
-
-    <div id="board"></div>
-
-    <button onclick="location.reload()">EXIT GAME</button>
-
+<div class="board" onclick="selectSize(6,this)">
+<b>6 × 6</b><br><small>25 boxes</small>
+</div>
 </div>
 
 </div>
 
-<script>
+<div class="card">
+<h2>💗 PLAYER 2</h2>
+<input id="p2" placeholder="Friend's name">
+</div>
 
-// ================= FIREBASE =================
+</div>
+
+<div class="online">
+<h2>🌐 Play Online</h2>
+<p>Create a private room and send the room code to your friend.</p>
+
+<div class="room">
+<button class="create" onclick="createRoom()">CREATE ROOM →</button>
+<input id="roomCode" placeholder="ROOM CODE">
+<button class="join" onclick="joinRoom()">JOIN</button>
+</div>
+
+<div id="status" class="status">
+Connecting to online mode...
+</div>
+</div>
+
+</div>
+
+<div id="game">
+<h2 id="roomInfo"></h2>
+<h3 id="turn"></h3>
+<div id="board"></div>
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+set,
+get,
+onValue,
+update
+}
+from "https://www.gstatic.com/firebasejs/12.7.1/firebase-database.js";
+
+
+/* FIREBASE CONFIG */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDBcTvTDmMOMIhmKwx8x57QvGNWWhYlpx8",
-    authDomain: "dots-and-boxes-60439.firebaseapp.com",
-    databaseURL: "https://dots-and-boxes-60439-default-rtdb.firebaseio.com",
-    projectId: "dots-and-boxes-60439",
-    storageBucket: "dots-and-boxes-60439.firebasestorage.app",
-    messagingSenderId: "435400230088",
-    appId: "1:435400230088:web:834195f25c120b698911fd"
+apiKey: "AIzaSyDBcTvTDmM0MIhmKwx8x57QvGNWWhY1px8",
+authDomain: "dots-and-boxes-60439.firebaseapp.com",
+databaseURL: "https://dots-and-boxes-60439-default-rtdb.firebaseio.com",
+projectId: "dots-and-boxes-60439",
+storageBucket: "dots-and-boxes-60439.firebasestorage.app",
+messagingSenderId: "435400230088",
+appId: "1:435400230088:web:834195f25c120b698911fd"
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-const db = firebase.database();
-
-
-// ================= GAME VARIABLES =================
-
-let room = "";
-let myPlayer = "";
-let myName = "";
-
-const SIZE = 4; // 4x4 dots = 3x3 boxes
-
+let size = 4;
+let roomId = "";
+let player = "";
 let gameData = null;
 
 
-// ================= CREATE ROOM =================
+/* BOARD SIZE */
 
-function createRoom(){
+window.selectSize = function(n, el){
+    size=n;
+    document.querySelectorAll(".board").forEach(x=>x.classList.remove("selected"));
+    el.classList.add("selected");
+};
 
-    myName = document.getElementById("name").value.trim();
 
-    if(!myName){
-        alert("Pehle apna naam enter karo.");
+/* CREATE ROOM */
+
+window.createRoom = async function(){
+
+    const name = document.getElementById("p1").value.trim();
+
+    if(!name){
+        alert("Pehle apna naam likho.");
         return;
     }
 
-    room = Math.random().toString(36).substring(2,8).toUpperCase();
-
-    myPlayer = "player1";
+    roomId = Math.random().toString(36).substring(2,8).toUpperCase();
+    player = "p1";
 
     const data = {
-        player1:{
-            name:myName,
-            score:0
-        },
-        player2:null,
-
-        turn:"player1",
-
-        horizontal:{},
-        vertical:{},
-
-        boxes:{},
-
-        started:false,
-        winner:null
+        size:size,
+        p1:name,
+        p2:"",
+        turn:"p1",
+        status:"waiting",
+        lines:{},
+        boxes:{}
     };
 
-    db.ref("rooms/"+room).set(data);
+    await set(ref(db,"rooms/"+roomId),data);
 
-    openGame();
+    document.getElementById("roomCode").value=roomId;
+    document.getElementById("status").innerHTML=
+        "Room created! Code apne friend ko bhejo: <b>"+roomId+"</b>";
 
     listenRoom();
-
-    alert("Room ban gaya!\nRoom Code: "+room+
-          "\n\nYe code apne friend ko bhejo.");
-}
+};
 
 
-// ================= JOIN ROOM =================
+/* JOIN ROOM */
 
-function joinRoom(){
+window.joinRoom = async function(){
 
-    myName = document.getElementById("name").value.trim();
-    const code = document.getElementById("roomCode").value.trim().toUpperCase();
-
-    if(!myName){
-        alert("Pehle apna naam enter karo.");
-        return;
-    }
+    const code=document.getElementById("roomCode").value.trim().toUpperCase();
+    const name=document.getElementById("p2").value.trim();
 
     if(!code){
-        alert("Room Code enter karo.");
+        alert("Room code daalo.");
         return;
     }
 
-    room = code;
-    myPlayer = "player2";
+    if(!name){
+        alert("Friend name daalo.");
+        return;
+    }
 
-    db.ref("rooms/"+room).once("value").then(snapshot=>{
+    const roomRef=ref(db,"rooms/"+code);
+    const snap=await get(roomRef);
 
-        if(!snapshot.exists()){
-            alert("Room nahi mila.");
-            return;
-        }
+    if(!snap.exists()){
+        alert("Room nahi mila.");
+        return;
+    }
 
-        const data = snapshot.val();
+    roomId=code;
+    player="p2";
 
-        if(data.player2){
-            alert("Room already full hai.");
-            return;
-        }
-
-        db.ref("rooms/"+room+"/player2").set({
-            name:myName,
-            score:0
-        });
-
-        db.ref("rooms/"+room+"/started").set(true);
-
-        openGame();
-
-        listenRoom();
-
+    await update(roomRef,{
+        p2:name,
+        status:"playing"
     });
 
-}
+    document.getElementById("status").innerHTML=
+        "Room joined successfully!";
+
+    listenRoom();
+};
 
 
-// ================= OPEN GAME =================
-
-function openGame(){
-
-    document.getElementById("lobby").style.display="none";
-    document.getElementById("game").style.display="block";
-
-    document.getElementById("roomDisplay").innerText=room;
-
-    createBoard();
-
-}
-
-
-// ================= LISTEN FIREBASE =================
+/* LISTEN TO FIREBASE */
 
 function listenRoom(){
 
-    db.ref("rooms/"+room).on("value",snapshot=>{
+    onValue(ref(db,"rooms/"+roomId),(snap)=>{
 
-        if(!snapshot.exists()) return;
+        if(!snap.exists()) return;
 
-        gameData=snapshot.val();
+        gameData=snap.val();
 
-        updateGame();
-
-    });
-
-}
-
-
-// ================= UPDATE GAME =================
-
-function updateGame(){
-
-    if(!gameData) return;
-
-    document.getElementById("player1").innerText =
-        gameData.player1?.name || "Player 1";
-
-    document.getElementById("score1").innerText =
-        gameData.player1?.score || 0;
-
-    document.getElementById("player2").innerText =
-        gameData.player2?.name || "Waiting...";
-
-    document.getElementById("score2").innerText =
-        gameData.player2?.score || 0;
-
-
-    if(!gameData.player2){
-
-        document.getElementById("status").innerText =
-            "⏳ Waiting for Player 2...";
-
-    }else{
-
-        if(gameData.winner){
-
-            document.getElementById("status").innerText =
-                "🏆 "+gameData.winner+" WINS!";
-
-        }else{
-
-            const turnName =
-                gameData[gameData.turn]?.name || "Player";
-
-            if(gameData.turn===myPlayer){
-
-                document.getElementById("status").innerText =
-                    "🔥 Your Turn!";
-
-            }else{
-
-                document.getElementById("status").innerText =
-                    "⏳ "+turnName+"'s Turn";
-
-            }
+        if(gameData.p2){
+            document.getElementById("status").innerHTML=
+                "🟢 Friend connected!";
         }
 
-    }
-
-    drawBoard();
-
+        showGame();
+    });
 }
 
 
-// ================= CREATE BOARD =================
+/* SHOW GAME */
 
-function createBoard(){
+function showGame(){
+
+    document.getElementById("setup").style.display="none";
+    document.getElementById("game").style.display="block";
+
+    document.getElementById("roomInfo").innerHTML=
+        "ROOM: "+roomId;
+
+    const currentName=
+        gameData.turn==="p1"
+        ?gameData.p1
+        :gameData.p2;
+
+    document.getElementById("turn").innerHTML=
+        gameData.turn===player
+        ? "🟢 Your Turn"
+        : "🔴 "+currentName+"'s Turn";
+
+    drawBoard();
+}
+
+
+/* DRAW BOARD */
+
+function drawBoard(){
 
     const board=document.getElementById("board");
 
     board.innerHTML="";
 
-    for(let r=0;r<SIZE;r++){
+    const dots=size;
+    const total=dots*dots;
 
-        for(let c=0;c<SIZE;c++){
+    board.style.gridTemplateColumns=
+        `repeat(${dots},1fr)`;
 
-            const point=document.createElement("div");
+    for(let r=0;r<dots;r++){
 
-            point.className="point";
+        for(let c=0;c<dots;c++){
+
+            const cell=document.createElement("div");
+            cell.className="cell";
+
+            /* DOT */
 
             const dot=document.createElement("div");
-
             dot.className="dot";
 
-            dot.style.left="26px";
-            dot.style.top="26px";
+            dot.style.left="0";
+            dot.style.top="0";
 
-            point.appendChild(dot);
+            cell.appendChild(dot);
 
-            board.appendChild(point);
+            /* HORIZONTAL LINE */
 
+            if(c<dots-1){
+
+                const line=document.createElement("div");
+
+                line.className="line h";
+
+                const key="h_"+r+"_"+c;
+
+                if(gameData.lines && gameData.lines[key]){
+                    line.style.background=
+                        gameData.lines[key]==="p1"
+                        ?" #19bfff"
+                        :"#ff3da8";
+                }
+
+                line.onclick=()=>makeMove(key);
+
+                cell.appendChild(line);
+            }
+
+            /* VERTICAL LINE */
+
+            if(r<dots-1){
+
+                const line=document.createElement("div");
+
+                line.className="line v";
+
+                const key="v_"+r+"_"+c;
+
+                if(gameData.lines && gameData.lines[key]){
+                    line.style.background=
+                        gameData.lines[key]==="p1"
+                        ?" #19bfff"
+                        :"#ff3da8";
+                }
+
+                line.onclick=()=>makeMove(key);
+
+                cell.appendChild(line);
+            }
+
+            board.appendChild(cell);
         }
-
     }
 
-    drawBoard();
+    /* DOT POSITIONS */
+
+    const cells=board.children;
+
+    for(let r=0;r<dots;r++){
+        for(let c=0;c<dots;c++){
+
+            const index=r*dots+c;
+            const dot=cells[index].querySelector(".dot");
+
+            dot.style.left="0";
+            dot.style.top="0";
+        }
+    }
 }
 
 
-// ================= DRAW BOARD =================
+/* MAKE MOVE */
 
-function drawBoard(){
-
-    const points=document.querySelectorAll(".point");
-
-    if(!points.length) return;
-
-    points.forEach(p=>{
-        p.querySelectorAll(".line,.box").forEach(x=>x.remove());
-    });
-
-
-    // Horizontal lines
-
-    for(let r=0;r<SIZE;r++){
-
-        for(let c=0;c<SIZE-1;c++){
-
-            const key=r+"_"+c;
-
-            if(gameData?.horizontal?.[key]){
-
-                const line=document.createElement("div");
-
-                line.className="line hline";
-
-                line.style.background =
-                    gameData.horizontal[key]==="player1"
-                    ? "#38bdf8"
-                    : "#f472b6";
-
-                points[r*SIZE+c].appendChild(line);
-
-            }else{
-
-                const line=document.createElement("div");
-
-                line.className="line hline";
-
-                line.style.background="#475569";
-
-                line.onclick=()=>makeMove("horizontal",key);
-
-                points[r*SIZE+c].appendChild(line);
-
-            }
-
-        }
-
-    }
-
-
-    // Vertical lines
-
-    for(let r=0;r<SIZE-1;r++){
-
-        for(let c=0;c<SIZE;c++){
-
-            const key=r+"_"+c;
-
-            if(gameData?.vertical?.[key]){
-
-                const line=document.createElement("div");
-
-                line.className="line vline";
-
-                line.style.background =
-                    gameData.vertical[key]==="player1"
-                    ? "#38bdf8"
-                    : "#f472b6";
-
-                points[r*SIZE+c].appendChild(line);
-
-            }else{
-
-                const line=document.createElement("div");
-
-                line.className="line vline";
-
-                line.style.background="#475569";
-
-                line.onclick=()=>makeMove("vertical",key);
-
-                points[r*SIZE+c].appendChild(line);
-
-            }
-
-        }
-
-    }
-
-}
-
-
-// ================= MAKE MOVE =================
-
-function makeMove(type,key){
+async function makeMove(key){
 
     if(!gameData) return;
 
-    if(!gameData.player2) return;
-
-    if(gameData.winner) return;
-
-    if(gameData.turn!==myPlayer){
-
-        alert("Abhi tumhari turn nahi hai.");
-
+    if(gameData.turn!==player){
         return;
     }
 
-    if(gameData[type]?.[key]) return;
-
+    if(gameData.lines && gameData.lines[key]){
+        return;
+    }
 
     const updates={};
 
-    updates["rooms/"+room+"/"+type+"/"+key]=myPlayer;
+    updates["rooms/"+roomId+"/lines/"+key]=player;
 
-    db.ref().update(updates).then(()=>{
+    let newTurn=player==="p1"?"p2":"p1";
 
-        checkBoxes(type,key);
+    updates["rooms/"+roomId+"/turn"]=newTurn;
 
-    });
-
-}
-
-
-// ================= CHECK BOXES =================
-
-function checkBoxes(type,key){
-
-    setTimeout(()=>{
-
-        db.ref("rooms/"+room).once("value").then(snapshot=>{
-
-            const data=snapshot.val();
-
-            let gotBox=false;
-
-            for(let r=0;r<SIZE-1;r++){
-
-                for(let c=0;c<SIZE-1;c++){
-
-                    const boxKey=r+"_"+c;
-
-                    if(data.boxes?.[boxKey]) continue;
-
-
-                    const top =
-                        data.horizontal?.[r+"_"+c];
-
-                    const bottom =
-                        data.horizontal?.[(r+1)+"_"+c];
-
-                    const left =
-                        data.vertical?.[r+"_"+c];
-
-                    const right =
-                        data.vertical?.[r+"_"+(c+1)];
-
-
-                    if(top && bottom && left && right){
-
-                        gotBox=true;
-
-                        const updates={};
-
-                        updates["boxes/"+boxKey]=myPlayer;
-
-                        updates[myPlayer+"/score"] =
-                            (data[myPlayer]?.score || 0)+1;
-
-                        db.ref("rooms/"+room).update(updates);
-
-                    }
-
-                }
-
-            }
-
-
-            // If no box, change turn
-
-            if(!gotBox){
-
-                const next =
-                    data.turn==="player1"
-                    ? "player2"
-                    : "player1";
-
-                db.ref("rooms/"+room+"/turn").set(next);
-
-            }
-
-            checkWinner();
-
-        });
-
-    },300);
-
-}
-
-
-// ================= WINNER =================
-
-function checkWinner(){
-
-    db.ref("rooms/"+room).once("value").then(snapshot=>{
-
-        const data=snapshot.val();
-
-        const totalBoxes=(SIZE-1)*(SIZE-1);
-
-        const score1=data.player1?.score || 0;
-        const score2=data.player2?.score || 0;
-
-        if(score1+score2>=totalBoxes){
-
-            let winner;
-
-            if(score1>score2){
-                winner=data.player1.name;
-            }else if(score2>score1){
-                winner=data.player2.name;
-            }else{
-                winner="DRAW";
-            }
-
-            db.ref("rooms/"+room+"/winner").set(winner);
-
-        }
-
-    });
-
+    await update(ref(db),updates);
 }
 
 </script>
